@@ -38,7 +38,7 @@ public class ToolManager : MonoBehaviour {
 
         public void Init() {
             slotButton.image.sprite = sprite;
-            slotButton.action = action;
+            slotButton.Init(action);
         }
     }
 }

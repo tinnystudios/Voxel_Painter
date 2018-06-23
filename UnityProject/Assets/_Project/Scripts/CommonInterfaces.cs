@@ -6,6 +6,7 @@ public interface IAction {
     void Deselect();
     void Undo();
     void Redo();
+    GameObject gameObject { get; }
 }
 
 public interface ISelectable {
@@ -15,11 +16,6 @@ public interface ISelectable {
     void Hover();
     void HoverExit();
     GameObject gameObject { get; }
-}
-
-public struct ActionData
-{
-    public string GUID;
 }
 
 [System.Serializable]
