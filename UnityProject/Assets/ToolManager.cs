@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using core;
-public class ToolManager : MonoBehaviour {
+public class ToolManager : Singleton<ToolManager> {
     public List<SlotContainer> slots;
 
     private void Awake()

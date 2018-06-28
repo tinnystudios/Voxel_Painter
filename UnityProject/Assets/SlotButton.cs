@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using core;
 using UnityEngine.UI;
+using System;
 
 public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IToolTipDisplay, IPointerDownHandler, IPointerExitHandler {
 
@@ -12,6 +13,20 @@ public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public Image image;
     public core.Action action;
     public GameObject highlight;
+
+    void Awake()
+    {
+        if (m_SlotGroup != null)
+        {
+            m_SlotGroup.OnSlotGroupActionSelected += OnSlotGroupActionSelected;
+        }
+    }
+
+    private void OnSlotGroupActionSelected(core.Action obj)
+    {
+        Debug.Log("Changed");
+        Init(obj);
+    }
 
     void Update()
     {

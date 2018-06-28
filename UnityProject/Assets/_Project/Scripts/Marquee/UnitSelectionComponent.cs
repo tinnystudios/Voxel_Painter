@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine.EventSystems;
+using core;
 
 public class UnitSelectionComponent : MonoBehaviour, IAction
 {
@@ -35,6 +36,9 @@ public class UnitSelectionComponent : MonoBehaviour, IAction
     //IAction, need an ActionUpdate function. 
     void Update()
     {
+        if (ActionManager.Instance.selectedAction.Result != this)
+            return;
+
         if (EventSystem.current.currentSelectedGameObject != null)
             return;
 

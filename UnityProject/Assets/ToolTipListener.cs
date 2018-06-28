@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ToolTipListener : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class ToolTipListener : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler {
 
     public float m_Duration = 2;
     private float startTime = 0;
@@ -36,7 +36,12 @@ public class ToolTipListener : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         startTime = 0;
+        ToolTipManager.Instance.HideToolTip();
+    }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        startTime = 0;
         ToolTipManager.Instance.HideToolTip();
     }
 }

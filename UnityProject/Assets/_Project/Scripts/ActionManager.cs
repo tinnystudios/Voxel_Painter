@@ -12,7 +12,7 @@ namespace core
         public List<Action> actions = new List<Action>();
         public delegate void ActionManagerDelegate(Action action);
         public event ActionManagerDelegate OnActionChanged;
-
+        
         void Awake() {
 
             var iActions = GetComponentsInChildren<IAction>();
@@ -30,16 +30,22 @@ namespace core
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            for (int i = 1; i < actions.Count+1; i++) {
+            var toolManager = ToolManager.Instance;
+
+
+
+            for (int i = 1; i < toolManager.slots.Count+1; i++) {
                 int index = i - 1;
+                var element = toolManager.slots[index].action;
+
                 if (Input.GetKeyDown(i.ToString()))
                 {
-                    if (selectedAction != actions[index] && selectedAction != null)
+                    if (selectedAction != element && selectedAction != null)
                         selectedAction.Result.Deselect();
 
-                    if (selectedAction != null && selectedAction != actions[index] || selectedAction == null)
+                    if (selectedAction != null && selectedAction != element || selectedAction == null)
                     {
-                        SelectAction(actions[index]);
+                        SelectAction(element);
                     }
                     
                 }

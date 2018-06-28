@@ -8,6 +8,8 @@ public class SlotGroup : MonoBehaviour {
 
     public SlotButton m_Template;
     public List<Action> m_Actions;
+    public Action m_SelectedAction;
+    public System.Action<Action> OnSlotGroupActionSelected;
 
     private void Awake()
     {
@@ -18,9 +20,27 @@ public class SlotGroup : MonoBehaviour {
             var temp = Instantiate(m_Template,transform);
             temp.Init(action);
             temp.gameObject.SetActive(true);
+            temp.highlight.SetActive(false);
         }
 
         gameObject.SetActive(false);
+
+        ActionManager.Instance.OnActionChanged += OnActionChanged;
+    }
+
+    private void OnActionChanged(Action action)
+    {
+        if (m_Actions.Contains(action))
+        {
+            m_SelectedAction = action;
+
+            if (OnSlotGroupActionSelected != null)
+            {
+                OnSlotGroupActionSelected.Invoke(m_SelectedAction);
+            }
+        }
+
+        Deactivate();
     }
 
     public void Activate()
