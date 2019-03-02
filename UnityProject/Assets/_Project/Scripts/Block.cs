@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    public BlockData mBlockData;
+
     public Face[] faces;
     public HashSet<Face> faceLookUp = new HashSet<Face>();
+
     private void Awake()
     {
         foreach (Face face in faces)
@@ -17,5 +20,21 @@ public class Block : MonoBehaviour
         {
             face.SetColor(c);
         }
+    }
+
+    public void Save()
+    {
+        mBlockData = new BlockData();
+        mBlockData.position = transform.position;
+        mBlockData.rotation = transform.rotation;
+        mBlockData.scale = transform.localScale;
+    }
+
+    [System.Serializable]
+    public class BlockData
+    {
+        public Vector3 position;
+        public Vector3 scale;
+        public Quaternion rotation;
     }
 }
