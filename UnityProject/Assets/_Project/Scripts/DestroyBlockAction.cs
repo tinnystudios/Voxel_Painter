@@ -10,6 +10,9 @@ public class DestroyBlockAction : MonoBehaviour, IAction
     public List<List<GameObject>> undoList = new List<List<GameObject>>();
     public List<List<GameObject>> redoList = new List<List<GameObject>>();
 
+    public void UpdateAction() { }
+
+
     public void Undo()
     {
         var gos = undoList[undoList.Count - 1];

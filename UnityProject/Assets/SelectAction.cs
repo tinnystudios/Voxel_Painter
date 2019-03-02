@@ -8,6 +8,8 @@ public class SelectAction : MonoBehaviour, IAction
     public List<SelectContainer> redoList = new List<SelectContainer>();
     public HistoryTracker<List<ISelectable>> history = new HistoryTracker<List<ISelectable>>();
 
+    public void UpdateAction() { }
+
     public void Undo()
     {
         var element = history.Undo();

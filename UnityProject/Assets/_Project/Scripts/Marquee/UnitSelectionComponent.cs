@@ -16,6 +16,11 @@ public class UnitSelectionComponent : MonoBehaviour, IAction
     public HistoryTracker<List<ISelectable>> history = new HistoryTracker<List<ISelectable>>();
     public core.Action myAction;
 
+    public void UpdateAction()
+    {
+
+    }
+
     public void Undo()
     {
         var element = history.Undo();

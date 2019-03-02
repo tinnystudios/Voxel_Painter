@@ -8,6 +8,8 @@ public class PaintAction : MonoBehaviour, IAction
     public List<PaintContainerList> undoList = new List<PaintContainerList>();
     public List<PaintContainerList> redoList = new List<PaintContainerList>();
 
+    public void UpdateAction() { }
+
     public void Undo()
     {
         var element = undoList[undoList.Count - 1];

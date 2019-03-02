@@ -8,6 +8,11 @@ public class SelectionClearAction : MonoBehaviour, IAction {
 
     public HistoryTracker<List<ISelectable>> history = new HistoryTracker<List<ISelectable>>();
 
+    public void UpdateAction()
+    {
+
+    }
+
     public void Undo()
     {
         var element = history.Undo();

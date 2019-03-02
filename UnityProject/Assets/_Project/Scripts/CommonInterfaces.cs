@@ -6,6 +6,7 @@ public interface IAction {
     void Deselect();
     void Undo();
     void Redo();
+    void UpdateAction();
     GameObject gameObject { get; }
 }
 

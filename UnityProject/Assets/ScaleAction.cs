@@ -9,6 +9,11 @@ public class ScaleAction : MonoBehaviour, IAction
     public List<ScaleContainerList> undoList;
     public List<ScaleContainerList> redoList;
 
+    public void UpdateAction()
+    {
+
+    }
+
     public void Undo()
     {
         var element = undoList[undoList.Count - 1];

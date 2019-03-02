@@ -42,6 +42,7 @@ public class CreateBlockAction : MonoBehaviour, IAction
 
     }
 
+    public void UpdateAction() { }
 
 
     public bool Use()

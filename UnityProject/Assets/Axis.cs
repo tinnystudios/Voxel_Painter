@@ -31,21 +31,46 @@ public class Axis : MonoBehaviour, IPointerDownHandler
     private void Update()
     {
         // #TODO Resolve Direction
+        var mousePos = Input.mousePosition;
+        mousePos.z = transform.position.z;
+        
+        var pos = Camera.main.ScreenToWorldPoint(mousePos);
+        var dirToCusor = Axes.transform.position - pos;
+        dirToCusor.Normalize();
 
         if (IsDragging)
         {
-            float h = Input.GetAxis("Mouse X");
-            float v = Input.GetAxis("Mouse Y");
+            var secondPos = Cursor.transform.position;
+            var disp = secondPos - _firstPos;
 
-            _delta = new Vector3(h, v, 0);
+            switch (AxisType)
+            {
+                case AxisType.Forward:
+                    disp.y = 0;
+                    disp.x = 0;
+                    break;
+                case AxisType.Right:
+                    disp.y = 0;
+                    disp.z = 0;
+                    break;
+                case AxisType.Up:
+                    disp.z = 0;
+                    disp.x = 0;
+                    break;
+            }
 
-            var delta = AxisType == AxisType.Up ? _delta.y : _delta.x;
+            Axes.transform.position = _axesFirstPos + disp;
 
-            Axes.transform.position += _dir * Speed * Time.deltaTime * delta;
+            Axes.OnMove();
         }
 
         if (Input.GetMouseButtonUp(0))
+        {
+            if(IsDragging == true)
+                Axes.OnMoveCompleted();
+
             IsDragging = false;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -55,12 +80,18 @@ public class Axis : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        _firstPos = Cursor.transform.position;
+        _axesFirstPos = Axes.transform.position;
+
         IsDragging = true;
     }
 
     public bool IsDragging = false;
     private Vector3 _dir;
     private Vector3 _delta;
+
+    private Vector3 _firstPos;
+    private Vector3 _axesFirstPos;
 }
 
 public enum AxisType
