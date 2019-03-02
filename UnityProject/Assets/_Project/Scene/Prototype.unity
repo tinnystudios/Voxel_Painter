@@ -1611,6 +1611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6543b87e0c3fd1c43bb55ffdbfdc28e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Undos: []
+  Redos: []
   Action:
     ObjectField: {fileID: 321959199}
     ResultType: 

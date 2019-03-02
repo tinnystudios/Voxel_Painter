@@ -1,8 +1,12 @@
 ﻿using core;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveAction : MonoBehaviour, IAction
 {
+    public List<Vector3> Undos;
+    public List<Vector3> Redos;
+
     public Action Action;
     public Axes Axes;
 
@@ -48,6 +52,9 @@ public class MoveAction : MonoBehaviour, IAction
 
     public void Select()
     {
+        if (SelectionManager.Instance.selectedGameObjects.Count == 0)
+            return;
+
         Axes.gameObject.SetActive(true);
 
         var pivot = SelectionManager.Instance.pivot;
