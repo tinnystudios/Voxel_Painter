@@ -23,7 +23,5 @@ public class InputManager : Singleton<InputManager> {
 
         if (Input.GetKeyUp(KeyCode.C))
             ColorManager.Instance.ToggleColorInfoMenu();
-        
-
     }
 }

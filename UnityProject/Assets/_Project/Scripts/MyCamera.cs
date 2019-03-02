@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MyCamera : MonoBehaviour {
 
@@ -31,8 +29,6 @@ public class MyCamera : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-
-
         target = targetTransform.position;
 
         float scrollValue = Input.GetAxis("Mouse ScrollWheel");
