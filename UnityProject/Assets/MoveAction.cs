@@ -59,7 +59,7 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
             var posContainer = new PositionContainer();
             posContainer.transform = block.transform;
             posContainer.lastPosition = block.transform.position - delta;
-            posContainer.newPosition = transform.position;
+            posContainer.newPosition = block.transform.position;
             posContainerList.list.Add(posContainer);
         }
         undoList.Add(posContainerList);
@@ -106,7 +106,6 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
         undoList.Remove(element);
         redoList.Add(element);
 
-        // Recalculator pivot point
         SelectionManager.Instance.CheckPivot();
     }
 
@@ -121,6 +120,8 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
 
         undoList.Add(element);
         redoList.Remove(element);
+
+        SelectionManager.Instance.CheckPivot();
     }
 
     private Vector3 _pivotLastPosition;
