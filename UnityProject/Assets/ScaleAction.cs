@@ -4,10 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //There are 2 types of scale, locally or world space
-public class ScaleAction : MonoBehaviour, IAction
+public class ScaleAction : MonoBehaviour, IAction, IShortKey
 {
     public List<ScaleContainerList> undoList;
     public List<ScaleContainerList> redoList;
+
+    public GameObject ScaleGroup;
+
+    public KeyCode Key
+    {
+        get
+        {
+            return InputManager.Instance.Config.Scale;
+        }
+    }
+
 
     public void UpdateAction()
     {
@@ -42,12 +53,12 @@ public class ScaleAction : MonoBehaviour, IAction
 
     public void Deselect()
     {
-
+        ScaleGroup.SetActive(false);
     }
 
     public void Select()
     {
-
+        ScaleGroup.SetActive(true);
     }
 
     public bool Use()

@@ -57,7 +57,10 @@ public class MyCamera : MonoBehaviour {
         nAng.z = 0;
         transform.eulerAngles = nAng;
 
-        if (Input.GetMouseButton(2)) {
+        var panKey = InputManager.Instance.Config.Pan;
+
+        if (Input.GetMouseButton(2) || Input.GetKey(panKey) || Input.GetKey(KeyCode.Space))
+        {
             transform.localPosition += -transform.up * delta.y * Time.deltaTime;
             transform.localPosition += -transform.right * delta.x * Time.deltaTime;
             target = transform.position + (transform.forward * focalRange);

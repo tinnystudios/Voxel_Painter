@@ -14,7 +14,6 @@ public class ToolManager : Singleton<ToolManager> {
     }
     private void Update()
     {
-
         foreach (var slot in slots)
         {
             if (slot.action.Object == ActionManager.Instance.selectedAction.Object)

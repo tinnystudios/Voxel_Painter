@@ -14,12 +14,11 @@ namespace core
         public event ActionManagerDelegate OnActionChanged;
         
         void Awake() {
-
             var iActions = GetComponentsInChildren<IAction>();
-            //var iActions = InterfaceHelper.FindObjects<IAction>();
 
             foreach (IAction action in iActions) {
                 actions.Add(new Action(action));
+                action.Deselect();
             }
 
             SelectAction(actions[0]);
@@ -30,6 +29,16 @@ namespace core
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
+            foreach (var action in actions)
+            {
+                var shortKey = GetShortKey(action);
+                if (shortKey != null && Input.GetKeyDown(shortKey.Key))
+                {
+                    SetSelectAction(action);
+                }
+            }
+
+
             var toolManager = ToolManager.Instance;
 
             for (int i = 1; i < toolManager.slots.Count+1; i++) {
@@ -38,14 +47,7 @@ namespace core
 
                 if (Input.GetKeyDown(i.ToString()))
                 {
-                    if (selectedAction != element && selectedAction != null)
-                        selectedAction.Result.Deselect();
-
-                    if (selectedAction != null && selectedAction != element || selectedAction == null)
-                    {
-                        SelectAction(element);
-                    }
-                    
+                    SetSelectAction(element);
                 }
             }
 
@@ -56,10 +58,6 @@ namespace core
                         Use(selectedAction);
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.R)) {
-                selectedAction = null;
-            }
         }
 
         public void Undo()
@@ -67,7 +65,24 @@ namespace core
 
         }
 
+        public void SetSelectAction(Action action)
+        {
+            if (selectedAction.Result != null && selectedAction != action)
+            {
+                selectedAction.Result.Deselect();
+            }
+
+            if (selectedAction.Result != null && selectedAction != action || selectedAction == null)
+            {
+                SelectAction(action);
+            }
+        }
+
         public void SelectAction(Action iAction) {
+
+            if (selectedAction.Result != null && selectedAction != iAction)
+                selectedAction.Result.Deselect();
+
             selectedAction = iAction;
             selectedAction.Result.Select();
             Debug.Log("[" + selectedAction.Result.ToString() + "]");
@@ -78,6 +93,13 @@ namespace core
         public void Use(Action action) {
             if(action.Result.Use())
                 HistoryManager.Instance.AddAction(action);
+        }
+
+        public IShortKey GetShortKey(Action action)
+        {
+            var shortkey = action.Result as IShortKey;
+            if (shortkey == null) return null;
+            return shortkey;
         }
     }
 }

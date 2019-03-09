@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour, IAction
+public class MoveAction : MonoBehaviour, IAction, IShortKey
 {
     public List<Vector3> Undos;
     public List<Vector3> Redos;
 
     public Action Action;
     public Axes Axes;
+
+    public KeyCode Key
+    {
+        get
+        {
+            return InputManager.Instance.Config.Move;
+        }
+    }
 
     private void Awake()
     {
@@ -74,4 +82,6 @@ public class MoveAction : MonoBehaviour, IAction
     }
 
     private Vector3 _pivotLastPosition;
+
+
 }
