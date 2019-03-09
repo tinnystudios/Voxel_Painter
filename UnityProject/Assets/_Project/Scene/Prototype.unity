@@ -991,6 +991,9 @@ MonoBehaviour:
   selectedAction:
     ObjectField: {fileID: 0}
     ResultType: 
+  SelectionAction:
+    ObjectField: {fileID: 1404618786}
+    ResultType: 
   actions: []
 --- !u!4 &265339909
 Transform:

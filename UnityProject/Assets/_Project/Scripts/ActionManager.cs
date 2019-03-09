@@ -9,6 +9,8 @@ namespace core
     public class ActionManager : Singleton<ActionManager>
     {
         public Action selectedAction;
+        public Action SelectionAction;
+
         public List<Action> actions = new List<Action>();
         public delegate void ActionManagerDelegate(Action action);
         public event ActionManagerDelegate OnActionChanged;
@@ -24,8 +26,29 @@ namespace core
             SelectAction(actions[0]);
         }
 
+        private Action ActionBeforeFastToggle;
+
         void Update()
         {
+            // If you hold left crlt, automatically switch to thingo, but return back as soon as you let go
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                if (SelectionAction != selectedAction)
+                {
+                    ActionBeforeFastToggle = selectedAction;
+                    SetSelectAction(SelectionAction);
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                if (ActionBeforeFastToggle != null)
+                {
+                    SetSelectAction(ActionBeforeFastToggle);
+                    ActionBeforeFastToggle = null;
+                }
+            }
+
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
