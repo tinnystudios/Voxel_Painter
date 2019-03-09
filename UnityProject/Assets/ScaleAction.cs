@@ -69,7 +69,6 @@ public class ScaleAction : MonoBehaviour, IAction, IShortKey
 
     public void ScaleLocally(float size) {
         var blocks = SelectionManager.Instance.blocks;
-
         var scaleContainerList = new ScaleContainerList();
 
         foreach (var block in blocks) {
