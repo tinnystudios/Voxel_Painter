@@ -27,6 +27,11 @@ public class SelectionManager : Singleton<SelectionManager> {
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.D))
+        {
+            Clear();
+        }
+
         if (EventSystem.current.currentSelectedGameObject != null)
             return;
 
