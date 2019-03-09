@@ -7,6 +7,7 @@ using Action = core.Action;
 
 //To optimize this, make it only find block with marquee.
 public class SelectionManager : Singleton<SelectionManager> {
+
     public List<GameObject> selectedGameObjects;
     public List<Block> blocks;
 
@@ -27,6 +28,8 @@ public class SelectionManager : Singleton<SelectionManager> {
 
     private void Update()
     {
+        pivot.gameObject.SetActive(selectedGameObjects.Count != 0);
+
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.D))
         {
             Clear();

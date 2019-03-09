@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HistoryManager : Singleton<HistoryManager> {
+    public System.Action OnHistoryChanged;
+
     public delegate void HistoryAction(HistoryActionContainer action);
     public delegate void HistoryActionList(List<HistoryActionContainer> actionContainers);
 
@@ -44,6 +46,8 @@ public class HistoryManager : Singleton<HistoryManager> {
 
         for (int i = lastIndex; i > index - 1; i--)
             Undo(cacheList[i]);
+
+        OnHistoryChanged.SafeInvoke();
     }
 
 
@@ -80,6 +84,8 @@ public class HistoryManager : Singleton<HistoryManager> {
 
         for (int i = lastIndex; i > index - 1; i--)
             Redo(cacheList[i]);
+
+        OnHistoryChanged.SafeInvoke();
     }
 
     //When you do an action, clear the redo list.

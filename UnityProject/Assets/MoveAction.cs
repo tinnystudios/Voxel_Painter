@@ -24,6 +24,12 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
         Axes.OnMoveCompleted += OnAxesFinished;
 
         Axes.gameObject.SetActive(false);
+        HistoryManager.Instance.OnHistoryChanged += OnHistoryChanged;
+    }
+
+    private void OnHistoryChanged()
+    {
+        SetAxisToPivot();
     }
 
     // Moving
@@ -82,7 +88,12 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
             return;
 
         Axes.gameObject.SetActive(true);
+        SetAxisToPivot();
+    }
 
+    [ContextMenu("Set to pivot")]
+    public void SetAxisToPivot()
+    {
         var pivot = SelectionManager.Instance.pivot;
         Axes.gameObject.transform.position = pivot.position;
 

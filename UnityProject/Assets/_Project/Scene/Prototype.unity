@@ -375,7 +375,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 309549735}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1613,8 +1613,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6543b87e0c3fd1c43bb55ffdbfdc28e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Undos: []
-  Redos: []
+  undoList: []
+  redoList: []
   Action:
     ObjectField: {fileID: 321959199}
     ResultType: 
@@ -5589,7 +5589,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1262595424}
   m_HandleRect: {fileID: 1262595423}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

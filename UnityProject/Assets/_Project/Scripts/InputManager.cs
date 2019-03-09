@@ -31,6 +31,12 @@ public class InputManager : Singleton<InputManager> {
 
 public static class ActionExtensions
 {
+    public static void SafeInvoke(this System.Action action)
+    {
+        if (action != null)
+            action.Invoke();
+    }
+
     public static void SafeInvoke<T>(this System.Action<T> action, T t)
     {
         if (action != null)
