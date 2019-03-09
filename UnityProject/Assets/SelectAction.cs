@@ -49,7 +49,7 @@ public class SelectAction : MonoBehaviour, IAction
     {
         if (!Input.GetKey(KeyCode.LeftShift))
         {
-            //SelectionManager.Instance.Clear();
+            SelectionManager.Instance.Clear();
         }
 
         //The thing is you are only selecting a face atm.
