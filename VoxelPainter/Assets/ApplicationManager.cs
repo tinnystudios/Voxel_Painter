@@ -53,7 +53,6 @@ public class ApplicationManager : MonoBehaviour
             instance.gameObject.transform.position = block.position;
             instance.gameObject.transform.localScale = block.scale;
         }
-
     }
 
     public void New()

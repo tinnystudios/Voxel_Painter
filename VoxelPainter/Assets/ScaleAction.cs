@@ -71,16 +71,24 @@ public class ScaleAction : MonoBehaviour, IAction, IShortKey
         var blocks = SelectionManager.Instance.blocks;
         var scaleContainerList = new ScaleContainerList();
 
+        bool hasChanged = false;
+
         foreach (var block in blocks) {
             var scaleContainer = new ScaleContainer();
             scaleContainer.transform = block.transform;
             scaleContainer.lastScale = block.transform.localScale;
             scaleContainer.newScale = Vector3.one * size;
             scaleContainerList.list.Add(scaleContainer);
-            block.transform.localScale = Vector3.one * size;
+
+            if (block.transform.localScale != Vector3.one * size)
+            {
+                hasChanged = true;
+                block.transform.localScale = Vector3.one * size;
+            }
         }
 
-        undoList.Add(scaleContainerList);
+        if(hasChanged)
+            undoList.Add(scaleContainerList);
     }
 
     public void ScaleWorldly(float size) {
