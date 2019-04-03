@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //There are 2 types of scale, locally or world space
@@ -95,41 +93,6 @@ public class ScaleAction : MonoBehaviour, IAction, IShortKey
         var blocks = SelectionManager.Instance.blocks;
         Transform pivot = SelectionManager.Instance.pivot;
 
-        //Scale to size
         pivot.transform.localScale = Vector3.one * size;
-
-        //Scale to
-    }
-
-    [System.Serializable]
-    public class ScaleContainer {
-        public Transform transform;
-        public Vector3 lastScale;
-        public Vector3 newScale;
-    }
-
-    [System.Serializable]
-    public class ScaleContainerList {
-        public List<ScaleContainer> list = new List<ScaleContainer>();
     }
 }
-
-/*
-        Transform pivot = SelectionManager.Instance.pivot;
-        Block[] blocks = pivot.GetComponentsInChildren<Block>();
-
-        foreach (Block block in blocks)
-            block.transform.SetParent(null);
-
-        //Returning to whatever size
-        pivot.transform.localScale = Vector3.one * undoList[undoList.Count-1];
-
-        foreach (Block block in blocks)
-            block.transform.SetParent(pivot.transform);
-
-        //Return to full size
-        pivot.transform.localScale = Vector3.one;
-
-        redoList.Add(undoList[undoList.Count - 1]);
-        undoList.RemoveAt(undoList.Count - 1);
-*/

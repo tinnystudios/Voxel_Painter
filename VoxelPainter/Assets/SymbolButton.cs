@@ -59,9 +59,11 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
         // Spawn at last face
         var block = _lastFace.GetComponentInParent<Block>();
 
-        var spawnPosition = block.transform.position;
-        spawnPosition.y += SymbolObj.transform.localScale.y; // Sub this for actual scale of overall object (or just place at ground)
-        Instantiate(SymbolObj, spawnPosition, Quaternion.identity);
+        var selectedBlockPosition = block.transform.position;
+        selectedBlockPosition.y += block.transform.localScale.y;
+
+        string id = "test";
+        SymbolManager.Instance.Load(selectedBlockPosition, id);
 
         _lastFace.SetColor(_lastFaceColor);
         _lastFace = null;
