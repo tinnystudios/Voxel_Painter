@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class AppData
 {
+    public string Id;
     public List<Block.BlockData> m_Blocks = new List<Block.BlockData>();
     public Vector3 Center;
 }
@@ -19,9 +21,10 @@ public class ApplicationManager : Singleton<ApplicationManager>
     private string SymbolPath = "/Presets/";
 
     private string SaveDataFileName = "SaveData.json";
-    private string SymbolFileName = "test.json";
 
     public Block blockPrefab;
+
+    public List<AppData> Presets;
 
     private void Awake()
     {
@@ -33,12 +36,13 @@ public class ApplicationManager : Singleton<ApplicationManager>
         Directory.CreateDirectory(SymbolPath);
 
         SaveDataPath += SaveDataFileName;
-        SymbolPath += SymbolFileName;
     }
 
     public void SaveSymbol(List<Block> blocks)
     {
         var data = new AppData();
+
+        data.Id = Guid.NewGuid().ToString();
 
         foreach (var block in blocks)
         {
@@ -52,10 +56,33 @@ public class ApplicationManager : Singleton<ApplicationManager>
         data.Center = center;
 
         var json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(SymbolPath, json);
+        File.WriteAllText(SymbolPath + data.Id + ".json", json);
     }
 
-    public AppData LoadSymbol()
+    // Load all Json inside Presets
+    [ContextMenu("Load presets")]
+    public void LoadPresets()
+    {
+        var info = new DirectoryInfo(SymbolPath);
+        var fileInfo = info.GetFiles();
+
+        foreach (var file in fileInfo)
+        {
+            var symbolData = LoadSymbol(file.DirectoryName);
+            Presets.Add(symbolData);
+        }
+    }
+
+    public AppData LoadSymbol(string path)
+    {
+        var data = File.ReadAllText(SymbolPath);
+        var appData = JsonUtility.FromJson<AppData>(data);
+
+        return appData;
+    }
+
+
+    public AppData GetSymbol(string id)
     {
         var data = File.ReadAllText(SymbolPath);
         var appData = JsonUtility.FromJson<AppData>(data);

@@ -1,10 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+
+public class SymbolModel
+{
+    public string Id { get; set; }
+}
 
 public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IDropHandler
 {
+    public SymbolModel Model { get; set; }
+
     // Layer actually spawn the symbol obj
     public Block SymbolObj;
 
@@ -49,7 +54,6 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
     public void OnDrop(PointerEventData eventData)
     {
         transform.position = _posBeforeDrag;
-        Debug.Log("Drop");
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -61,12 +65,10 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
 
         var selectedBlockPosition = block.transform.position;
 
-        string id = "test";
-        SymbolManager.Instance.Load(block, id);
+        SymbolManager.Instance.Load(block, Model.Id);
 
         _lastFace.SetColor(_lastFaceColor);
         _lastFace = null;
 
-        Debug.Log("End");
     }
 }

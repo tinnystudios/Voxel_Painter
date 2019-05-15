@@ -11,9 +11,9 @@ public class SymbolManager : Singleton<SymbolManager>
         ApplicationManager.Instance.SaveSymbol(blocks);
     }
 
-    private List<Transform> GenerateBlocks()
+    private List<Transform> GenerateBlocks(string id)
     {
-        var data = ApplicationManager.Instance.LoadSymbol();
+        var data = ApplicationManager.Instance.GetSymbol(id);
         var blocks = data.m_Blocks;
         var transforms = new List<Transform>();
 
@@ -41,7 +41,7 @@ public class SymbolManager : Singleton<SymbolManager>
 
     public void Load(Block selectedBlock, string id)
     {
-        var transforms = GenerateBlocks();
+        var transforms = GenerateBlocks(id);
         var lowestBlock = Lowest(transforms);
         var lowestFace = LowestFace(lowestBlock);
         var selectedFace = HighestFace(selectedBlock.transform);
