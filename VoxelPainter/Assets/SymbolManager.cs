@@ -11,14 +11,10 @@ public class SymbolManager : Singleton<SymbolManager>
         ApplicationManager.Instance.SaveSymbol(blocks);
     }
 
-    public void Load(Block selectedBlock, string id)
+    private List<Transform> GenerateBlocks()
     {
-        var selectedBlockPosition = selectedBlock.transform.position;
-        selectedBlockPosition.y += selectedBlock.transform.localScale.y;
-
         var data = ApplicationManager.Instance.LoadSymbol();
         var blocks = data.m_Blocks;
-
         var transforms = new List<Transform>();
 
         foreach (var blockData in blocks)
@@ -27,37 +23,61 @@ public class SymbolManager : Singleton<SymbolManager>
             transforms.Add(instance.transform);
         }
 
-        var tempCenter = TransformUtils.Center(transforms.ToArray());
-        var pivot = new GameObject("Symbol");
+        return transforms;
+    }
 
+    private Transform Lowest(List<Transform> transforms)
+    {
         Transform lowest = transforms[0];
 
-        foreach(var t in transforms)
+        foreach (var t in transforms)
         {
             if (t.position.y < lowest.position.y)
-            {
                 lowest = t;
-            }
         }
 
-        var lowestFace = lowest.GetComponentsInChildren<Face>()
+        return lowest;
+    }
+
+    public void Load(Block selectedBlock, string id)
+    {
+        var transforms = GenerateBlocks();
+        var lowestBlock = Lowest(transforms);
+        var lowestFace = LowestFace(lowestBlock);
+        var selectedFace = HighestFace(selectedBlock.transform);
+
+        var pivot = SetupPivot(lowestFace, transforms);
+        pivot.position = selectedFace.transform.position;
+    }
+
+    private Face LowestFace(Transform block)
+    {
+        var lowestFace = block.GetComponentsInChildren<Face>()
             .OrderBy(x => x.transform.position.y)
             .Take(1)
             .SingleOrDefault();
 
-        var selectedFace = selectedBlock.GetComponentsInChildren<Face>()
+        return lowestFace;
+    }
+
+    private Face HighestFace(Transform block)
+    {
+        var lowestFace = block.GetComponentsInChildren<Face>()
             .OrderByDescending(x => x.transform.position.y)
             .Take(1)
             .SingleOrDefault();
 
+        return lowestFace;
+    }
+
+    private Transform SetupPivot(Face lowestFace, List<Transform> transforms)
+    {
+        var pivot = new GameObject("Symbol");
         pivot.transform.position = lowestFace.transform.position;
 
-        // Add to symbol position
         foreach (var t in transforms)
-        {
             t.SetParent(pivot.transform);
-        }
 
-        pivot.transform.position = selectedFace.transform.position;
+        return pivot.transform;
     }
 }
