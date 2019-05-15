@@ -60,10 +60,9 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
         var block = _lastFace.GetComponentInParent<Block>();
 
         var selectedBlockPosition = block.transform.position;
-        selectedBlockPosition.y += block.transform.localScale.y;
 
         string id = "test";
-        SymbolManager.Instance.Load(selectedBlockPosition, id);
+        SymbolManager.Instance.Load(block, id);
 
         _lastFace.SetColor(_lastFaceColor);
         _lastFace = null;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SymbolManager : Singleton<SymbolManager>
@@ -10,8 +11,11 @@ public class SymbolManager : Singleton<SymbolManager>
         ApplicationManager.Instance.SaveSymbol(blocks);
     }
 
-    public void Load(Vector3 selectedBlockPosition, string id)
+    public void Load(Block selectedBlock, string id)
     {
+        var selectedBlockPosition = selectedBlock.transform.position;
+        selectedBlockPosition.y += selectedBlock.transform.localScale.y;
+
         var data = ApplicationManager.Instance.LoadSymbol();
         var blocks = data.m_Blocks;
 
@@ -26,26 +30,34 @@ public class SymbolManager : Singleton<SymbolManager>
         var tempCenter = TransformUtils.Center(transforms.ToArray());
         var pivot = new GameObject("Symbol");
 
-        pivot.transform.position = tempCenter;
+        Transform lowest = transforms[0];
 
+        foreach(var t in transforms)
+        {
+            if (t.position.y < lowest.position.y)
+            {
+                lowest = t;
+            }
+        }
+
+        var lowestFace = lowest.GetComponentsInChildren<Face>()
+            .OrderBy(x => x.transform.position.y)
+            .Take(1)
+            .SingleOrDefault();
+
+        var selectedFace = selectedBlock.GetComponentsInChildren<Face>()
+            .OrderByDescending(x => x.transform.position.y)
+            .Take(1)
+            .SingleOrDefault();
+
+        pivot.transform.position = lowestFace.transform.position;
+
+        // Add to symbol position
         foreach (var t in transforms)
         {
             t.SetParent(pivot.transform);
         }
 
-        pivot.transform.position = selectedBlockPosition;
-        //pivot.transform.position += Vector3.up * 0.5F;
-
-        // Find highest piece
-        float highest = 0;
-
-        foreach (var t in transforms)
-        {
-            if (t.position.y > highest)
-                highest = t.position.y;
-        }
-
-        float scale = highest - pivot.transform.position.y;
-        pivot.transform.position += Vector3.up * scale;
+        pivot.transform.position = selectedFace.transform.position;
     }
 }
