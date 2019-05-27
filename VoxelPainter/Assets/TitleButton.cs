@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class TitleButton : MonoBehaviour, IPointerClickHandler
 {
-    private bool _isOpened = false;
+    public bool IsOpened = false;
     public GameObject Group;
 
     private void Awake()
@@ -15,12 +15,12 @@ public class TitleButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _isOpened = !_isOpened;
+        IsOpened = !IsOpened;
         ApplyGroupVisibility();
     }
 
     public void ApplyGroupVisibility()
     {
-        Group.SetActive(_isOpened);
+        Group.SetActive(IsOpened);
     }
 }

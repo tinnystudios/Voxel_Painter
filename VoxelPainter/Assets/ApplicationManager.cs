@@ -26,6 +26,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     // Move to symbols
     public List<AppData> Presets;
+    private Dictionary<string, AppData> _presetLookUp = new Dictionary<string, AppData>();
 
     private void Awake()
     {
@@ -60,6 +61,11 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         var json = JsonUtility.ToJson(data, true);
         File.WriteAllText(SymbolPath + data.Id + ".json", json);
+
+#if UNITY_EDITOR
+        UnityEditor.AssetDatabase.Refresh();
+#endif
+
     }
 
     // Load all Json inside Presets
@@ -71,8 +77,15 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         foreach (var file in fileInfo)
         {
-            var symbolData = LoadSymbol(file.DirectoryName);
+            var fileName = file.FullName;
+
+            if (fileName.Contains(".meta"))
+                continue;
+
+            var symbolData = LoadSymbol(fileName);
             Presets.Add(symbolData);
+
+            _presetLookUp.Add(symbolData.Id, symbolData);
         }
 
         // Symbol Manager need to populate it
@@ -80,9 +93,20 @@ public class ApplicationManager : Singleton<ApplicationManager>
         symbolManager.PopulatePresets(Presets);
     }
 
+
+    internal void ReloadSymbols()
+    {
+        Presets.Clear();
+        _presetLookUp.Clear();
+
+        LoadPresets();
+    }
+
+
     public AppData LoadSymbol(string path)
     {
-        var data = File.ReadAllText(SymbolPath);
+        Debug.Log(path);
+        var data = File.ReadAllText(path);
         var appData = JsonUtility.FromJson<AppData>(data);
 
         return appData;
@@ -91,10 +115,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public AppData GetSymbol(string id)
     {
-        var data = File.ReadAllText(SymbolPath);
-        var appData = JsonUtility.FromJson<AppData>(data);
-
-        return appData;
+        return _presetLookUp[id];
     }
 
     public void Save()

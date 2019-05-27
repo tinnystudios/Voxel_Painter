@@ -9,6 +9,8 @@ public class SymbolManager : Singleton<SymbolManager>
     public Transform SymbolContainer;
     public SymbolButton SymbolPrefab;
 
+    private List<SymbolButton> _symbolButtons = new List<SymbolButton>();
+
     private void Awake()
     {
         // Symbol list load all from X path
@@ -16,8 +18,20 @@ public class SymbolManager : Singleton<SymbolManager>
 
     public void Add()
     {
+
         var blocks = SelectionManager.Instance.blocks;
         ApplicationManager.Instance.SaveSymbol(blocks);
+
+        // Clear all
+        foreach (var symbol in _symbolButtons)
+        {
+            Destroy(symbol.gameObject);
+        }
+
+        _symbolButtons.Clear();
+
+        // Reload
+        ApplicationManager.Instance.ReloadSymbols();
     }
 
     private List<Transform> GenerateBlocks(string id)
@@ -95,7 +109,9 @@ public class SymbolManager : Singleton<SymbolManager>
         foreach (var preset in presets)
         {
             var symbol = Instantiate(SymbolPrefab, SymbolContainer);
-            symbol.Model.Id = preset.Id;
+            symbol.Model = new SymbolModel { Id = preset.Id };
+
+            _symbolButtons.Add(symbol);
         }
     }
 }
