@@ -2082,6 +2082,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322875258}
   m_CullTransparentMesh: 0
+--- !u!224 &362290459 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3280348428031593622, guid: f09aeddc6a6c97c43b04b4a2a505f894,
+    type: 3}
+  m_PrefabInstance: {fileID: 3280348428015213936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &436288689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,9 +5413,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AppData:
+    Id: 
     m_Blocks: []
+    Center: {x: 0, y: 0, z: 0}
   blockPrefab: {fileID: 114325667712461920, guid: 402acb9231a74cb41b13e3e67f51b1f8,
     type: 3}
+  Presets: []
 --- !u!1 &1262595422
 GameObject:
   m_ObjectHideFlags: 0
@@ -7298,6 +7307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20a26c7438d8184ca5c8580b753cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SymbolContainer: {fileID: 362290459}
+  SymbolPrefab: {fileID: 6258540657593756311, guid: 36ce1cff004781f40ac9fff04b2e4a08,
+    type: 3}
 --- !u!1 &1617263654
 GameObject:
   m_ObjectHideFlags: 0
@@ -9029,6 +9041,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3280348427335243508, guid: f09aeddc6a6c97c43b04b4a2a505f894,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 3280348427579353064, guid: f09aeddc6a6c97c43b04b4a2a505f894,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9048,11 +9065,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3280348427335243508, guid: f09aeddc6a6c97c43b04b4a2a505f894,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3280348426926064767, guid: f09aeddc6a6c97c43b04b4a2a505f894,
         type: 3}

@@ -24,6 +24,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public Block blockPrefab;
 
+    // Move to symbols
     public List<AppData> Presets;
 
     private void Awake()
@@ -36,6 +37,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
         Directory.CreateDirectory(SymbolPath);
 
         SaveDataPath += SaveDataFileName;
+
+        LoadPresets();
     }
 
     public void SaveSymbol(List<Block> blocks)
@@ -71,6 +74,10 @@ public class ApplicationManager : Singleton<ApplicationManager>
             var symbolData = LoadSymbol(file.DirectoryName);
             Presets.Add(symbolData);
         }
+
+        // Symbol Manager need to populate it
+        var symbolManager = SymbolManager.Instance;
+        symbolManager.PopulatePresets(Presets);
     }
 
     public AppData LoadSymbol(string path)

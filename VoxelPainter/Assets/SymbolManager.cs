@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class SymbolManager : Singleton<SymbolManager>
 {
+    public Transform SymbolContainer;
+    public SymbolButton SymbolPrefab;
+
+    private void Awake()
+    {
+        // Symbol list load all from X path
+    }
+
     public void Add()
     {
         var blocks = SelectionManager.Instance.blocks;
@@ -79,5 +88,14 @@ public class SymbolManager : Singleton<SymbolManager>
             t.SetParent(pivot.transform);
 
         return pivot.transform;
+    }
+
+    internal void PopulatePresets(List<AppData> presets)
+    {
+        foreach (var preset in presets)
+        {
+            var symbol = Instantiate(SymbolPrefab, SymbolContainer);
+            symbol.Model.Id = preset.Id;
+        }
     }
 }
