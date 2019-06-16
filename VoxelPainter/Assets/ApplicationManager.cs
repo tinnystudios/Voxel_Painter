@@ -76,11 +76,18 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         var xMax = TransformUtils.XMax(transforms);
         var zMax = TransformUtils.ZMax(transforms);
+        var yMax = TransformUtils.YMax(transforms);
 
+        var yDist = (yMax - center.y) * 2;
         var xDist = (xMax - center.x) * 2;
-        var zDist = (xMax - center.z) * 2;
+        var zDist = (zMax - center.z) * 2;
 
-        var dist = xDist > zDist ? xDist : zDist;
+        var list = new List<float>();
+        list.Add(yDist);
+        list.Add(xDist);
+        list.Add(zDist);
+
+        var dist = list.Max() * 2;
 
         /*
         ScreenshotCamera.transform.position = center;
@@ -93,6 +100,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
         dir.Normalize();
 
         ScreenshotCamera.transform.position = center - (dir * dist);
+        ScreenshotCamera.transform.forward = dir;
         StartCoroutine(Screenshot(transforms, data.Id));
 
         var json = JsonUtility.ToJson(data, true);
