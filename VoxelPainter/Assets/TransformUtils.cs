@@ -41,4 +41,52 @@ public static class TransformUtils
 
         return new Vector3(centerX, centerY, centerZ);
     }
+
+    public static float XMax(Transform[] transforms)
+    {
+        var x = 0.0F;
+        foreach (var t in transforms)
+        {
+            if (t.position.x > x)
+                x = t.position.x;
+        }
+
+        return x;
+    }
+
+    public static float XMin(Transform[] transforms)
+    {
+        var x = 0.0F;
+        foreach (var t in transforms)
+        {
+            if (t.position.x < x)
+                x = t.position.x;
+        }
+
+        return x;
+    }
+
+    public static float ZMax(Transform[] transforms)
+    {
+        var z = 0.0F;
+        foreach (var t in transforms)
+        {
+            if (t.position.x > z)
+                z = t.position.z;
+        }
+
+        return z;
+    }
+
+    public static float ZMin(Transform[] transforms)
+    {
+        var z = 0.0F;
+        foreach (var t in transforms)
+        {
+            if (t.position.x < z)
+                z = t.position.z;
+        }
+
+        return z;
+    }
 }

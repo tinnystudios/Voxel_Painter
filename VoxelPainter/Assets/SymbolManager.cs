@@ -11,14 +11,8 @@ public class SymbolManager : Singleton<SymbolManager>
 
     private List<SymbolButton> _symbolButtons = new List<SymbolButton>();
 
-    private void Awake()
-    {
-        // Symbol list load all from X path
-    }
-
     public void Add()
     {
-
         var blocks = SelectionManager.Instance.blocks;
         ApplicationManager.Instance.SaveSymbol(blocks);
 
@@ -29,8 +23,12 @@ public class SymbolManager : Singleton<SymbolManager>
         }
 
         _symbolButtons.Clear();
+        StartCoroutine(Reload());
+    }
 
-        // Reload
+    private IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(0.3F);
         ApplicationManager.Instance.ReloadSymbols();
     }
 
@@ -110,7 +108,7 @@ public class SymbolManager : Singleton<SymbolManager>
         {
             var symbol = Instantiate(SymbolPrefab, SymbolContainer);
             symbol.Model = new SymbolModel { Id = preset.Id };
-
+            symbol.SetIcon(preset.IconTexture2D);
             _symbolButtons.Add(symbol);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SymbolModel
 {
@@ -9,7 +10,7 @@ public class SymbolModel
 public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IDropHandler
 {
     public SymbolModel Model { get; set; }
-
+    public RawImage Icon;
     // Layer actually spawn the symbol obj
     public Block SymbolObj;
 
@@ -18,6 +19,11 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
     private Vector3 _posBeforeDrag;
     private Face _lastFace;
     private Color _lastFaceColor;
+
+    public void SetIcon(Texture2D texture)
+    {
+        Icon.texture = texture;
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {

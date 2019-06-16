@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,11 +12,16 @@ public class AppData
     public string Id;
     public List<Block.BlockData> m_Blocks = new List<Block.BlockData>();
     public Vector3 Center;
+
+    public Texture2D IconTexture2D;
 }
 
 public class ApplicationManager : Singleton<ApplicationManager>
 {
     public AppData m_AppData;
+
+    public Camera ScreenshotCamera;
+    public RenderTexture ScreenshotRenderTexture;
 
     private string SaveDataPath = "/SaveData/";
     private string SymbolPath = "/Presets/";
@@ -44,6 +50,9 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void SaveSymbol(List<Block> blocks)
     {
+        if (blocks.Count == 0)
+            return;
+
         var data = new AppData();
 
         data.Id = Guid.NewGuid().ToString();
@@ -59,13 +68,73 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         data.Center = center;
 
+        foreach (var block in blocks)
+        {
+            foreach (var f in block.faces)
+                f.Deselect();
+        }
+
+        var xMax = TransformUtils.XMax(transforms);
+        var zMax = TransformUtils.ZMax(transforms);
+
+        var xDist = (xMax - center.x) * 2;
+        var zDist = (xMax - center.z) * 2;
+
+        var dist = xDist > zDist ? xDist : zDist;
+
+        /*
+        ScreenshotCamera.transform.position = center;
+        ScreenshotCamera.transform.position += Vector3.up * dist;
+        ScreenshotCamera.transform.LookAt(center);
+        */
+
+        var cam = Camera.main.transform;
+        var dir = center - cam.position;
+        dir.Normalize();
+
+        ScreenshotCamera.transform.position = center - (dir * dist);
+
+        StartCoroutine(Screenshot(transforms, data.Id));
+
         var json = JsonUtility.ToJson(data, true);
         File.WriteAllText(SymbolPath + data.Id + ".json", json);
 
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
 #endif
+    }
 
+    IEnumerator Screenshot(Transform[] transforms, string id)
+    {
+        foreach (var t in transforms)
+        {
+            var meshes = t.GetComponentsInChildren<MeshRenderer>();
+            foreach (var m in meshes)
+            {
+                m.gameObject.layer = 10;
+            }
+        }
+
+        yield return new WaitForSeconds(0.1F);
+
+        byte[] bytes = RenderTextureToTexture2D(ScreenshotRenderTexture).EncodeToPNG();
+        File.WriteAllBytes(SymbolPath + "image-" + id + ".png", bytes);
+
+        yield return new WaitForSeconds(0.1F);
+
+        foreach (var t in transforms)
+        {
+            t.gameObject.layer = 9;
+        }
+    }
+
+    Texture2D RenderTextureToTexture2D(RenderTexture rTex)
+    {
+        Texture2D tex = new Texture2D(256, 256, TextureFormat.RGB24, false);
+        RenderTexture.active = rTex;
+        tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
+        tex.Apply();
+        return tex;
     }
 
     // Load all Json inside Presets
@@ -82,6 +151,9 @@ public class ApplicationManager : Singleton<ApplicationManager>
             if (fileName.Contains(".meta"))
                 continue;
 
+            if (fileName.Contains(".png"))
+                continue;
+
             var symbolData = LoadSymbol(fileName);
             Presets.Add(symbolData);
 
@@ -92,7 +164,6 @@ public class ApplicationManager : Singleton<ApplicationManager>
         var symbolManager = SymbolManager.Instance;
         symbolManager.PopulatePresets(Presets);
     }
-
 
     internal void ReloadSymbols()
     {
@@ -108,6 +179,12 @@ public class ApplicationManager : Singleton<ApplicationManager>
         Debug.Log(path);
         var data = File.ReadAllText(path);
         var appData = JsonUtility.FromJson<AppData>(data);
+
+        var iconBytes = File.ReadAllBytes(SymbolPath + "image-" + appData.Id + ".png");
+        var tx = new Texture2D(256, 256, TextureFormat.RGBA32, false);
+        tx.LoadImage(iconBytes);
+
+        appData.IconTexture2D = tx;
 
         return appData;
     }
