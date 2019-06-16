@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Face : MonoBehaviour, ISelectable {
+public class Face : MonoBehaviour, ISelectable
+{
     public MaterialBlockField materialBlock;
+
+    public EFaceType FaceType;
     public Color color = Color.white;
+
     private bool isSelected = false;
 
     public bool IsSelected
@@ -45,4 +49,21 @@ public class Face : MonoBehaviour, ISelectable {
         color = c;
         materialBlock.SetColor("_Color", color);
     }
+}
+
+[Serializable]
+public class FaceData
+{
+    public Color Color;
+    public EFaceType FaceType;
+}
+
+public enum EFaceType
+{
+    Back,
+    Front,
+    Top,
+    Bottom,
+    Left,
+    Right
 }

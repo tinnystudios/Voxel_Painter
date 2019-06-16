@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -222,6 +223,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
         }
 
         var json = JsonUtility.ToJson(m_AppData, true);
+
         File.WriteAllText(SaveDataPath, json);
     }
 
@@ -242,6 +244,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
             var instance = Instantiate(blockPrefab);
             instance.gameObject.transform.position = block.position;
             instance.gameObject.transform.localScale = block.scale;
+            instance.Load(block);
         }
     }
 
@@ -250,7 +253,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
         var instance = Instantiate(blockPrefab);
         instance.gameObject.transform.position = data.position;
         instance.gameObject.transform.localScale = data.scale;
-
+        instance.Load(data);
         return instance;
     }
 

@@ -59,6 +59,7 @@ MonoBehaviour:
     mRenderer: {fileID: 23935764767515504}
     properties:
     - _Color
+  FaceType: 4
   color: {r: 0.8745098, g: 0.74509805, b: 0.4, a: 1}
 --- !u!65 &65254343831285356
 BoxCollider:
@@ -221,6 +222,7 @@ MonoBehaviour:
     mRenderer: {fileID: 23631995233182558}
     properties:
     - _Color
+  FaceType: 5
   color: {r: 0.8745098, g: 0.74509805, b: 0.4, a: 1}
 --- !u!65 &65304405441800846
 BoxCollider:
@@ -383,6 +385,7 @@ MonoBehaviour:
     mRenderer: {fileID: 23204055383963572}
     properties:
     - _Color
+  FaceType: 3
   color: {r: 0.8745098, g: 0.74509805, b: 0.4, a: 1}
 --- !u!65 &65163952452179278
 BoxCollider:
@@ -622,6 +625,7 @@ MonoBehaviour:
     mRenderer: {fileID: 23795968374312940}
     properties:
     - _Color
+  FaceType: 2
   color: {r: 0.8745098, g: 0.74509805, b: 0.4, a: 1}
 --- !u!65 &65903454760416586
 BoxCollider:
@@ -707,6 +711,7 @@ MonoBehaviour:
     mRenderer: {fileID: 23137477362860216}
     properties:
     - _Color
+  FaceType: 0
   color: {r: 0.8745098, g: 0.74509805, b: 0.4, a: 1}
 --- !u!65 &65366508062207062
 BoxCollider:
@@ -792,6 +797,7 @@ MonoBehaviour:
     mRenderer: {fileID: 23288376489253232}
     properties:
     - _Color
+  FaceType: 1
   color: {r: 0.8745098, g: 0.74509805, b: 0.4, a: 1}
 --- !u!65 &65487720120969012
 BoxCollider:
