@@ -93,7 +93,6 @@ public class ApplicationManager : Singleton<ApplicationManager>
         dir.Normalize();
 
         ScreenshotCamera.transform.position = center - (dir * dist);
-
         StartCoroutine(Screenshot(transforms, data.Id));
 
         var json = JsonUtility.ToJson(data, true);
@@ -106,6 +105,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     IEnumerator Screenshot(Transform[] transforms, string id)
     {
+        GL.Clear(true, true, Color.black);
+
         foreach (var t in transforms)
         {
             var meshes = t.GetComponentsInChildren<MeshRenderer>();
@@ -124,8 +125,14 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         foreach (var t in transforms)
         {
-            t.gameObject.layer = 9;
+            var meshes = t.GetComponentsInChildren<MeshRenderer>();
+            foreach (var m in meshes)
+            {
+                m.gameObject.layer = 9;
+            }
         }
+
+        ScreenshotRenderTexture.Release();
     }
 
     Texture2D RenderTextureToTexture2D(RenderTexture rTex)
