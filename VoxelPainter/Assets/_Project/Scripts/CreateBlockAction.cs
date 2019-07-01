@@ -44,12 +44,24 @@ public class CreateBlockAction : MonoBehaviour, IAction
 
     public void UpdateAction() { }
 
+    public Vector3 Delta(Transform face)
+    {
+        Vector3 scale = Vector3.one * size;
+        Vector3 dir = face.forward;
+
+        float hitSize = face.parent.localScale.x;
+        float gap = hitSize - size;
+
+        Vector3 blockPosition = face.parent.position;
+        return dir * (size + gap / 2);
+    }
 
     public bool Use()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+        // Use Delta() methhod above
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 scale = Vector3.one * size;
@@ -78,5 +90,12 @@ public class CreateBlockAction : MonoBehaviour, IAction
 
     }
 
+    public Block CreateBlock()
+    {
+        GameObject go = Instantiate(block);
+        var instance = go.GetComponent<Block>();
+        instance.SetColor(ColorManager.Instance.primaryColor);
 
+        return instance;
+    }
 }

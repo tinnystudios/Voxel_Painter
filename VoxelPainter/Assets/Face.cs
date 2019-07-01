@@ -12,6 +12,8 @@ public class Face : MonoBehaviour, ISelectable
 
     private bool isSelected = false;
 
+    public Block Block => GetComponentInParent<Block>();
+
     public bool IsSelected
     {
         get

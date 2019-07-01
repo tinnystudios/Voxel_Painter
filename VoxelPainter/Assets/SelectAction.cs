@@ -58,7 +58,7 @@ public class SelectAction : MonoBehaviour, IAction
 
         if (iSelectable != null)
         {
-            if (Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift))
             {
                 Block block = iSelectable.gameObject.transform.parent.GetComponent<Block>();
                 foreach (Face face in block.faces)

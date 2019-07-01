@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class CreationManager : Singleton<CreationManager> {
     public CreateBlockAction createAction;
     public Text textSize;
+
+    public float mMinSize = 0.125F;
+
     public float mSize = 1;
     public List<float> sizes;
     
