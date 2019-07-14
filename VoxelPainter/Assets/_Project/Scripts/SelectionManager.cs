@@ -19,6 +19,7 @@ public class SelectionManager : Singleton<SelectionManager>
     public core.Action clearAction;
 
     public bool HasSelection => selectedGameObjects.Count != 0;
+    public bool HasMoreThan1 => selectedGameObjects.Count > 1;
 
     void Awake() {
         //InputManager.OnClickDown += OnClickDown;
@@ -49,8 +50,15 @@ public class SelectionManager : Singleton<SelectionManager>
             //Deselect when you hovered to nothing
             if (selectableHovered != null)
             {
-                if (!selectableHovered.IsSelected)
-                    selectableHovered.HoverExit();
+                try
+                {
+                    if (!selectableHovered.IsSelected)
+                        selectableHovered.HoverExit();
+                }
+                catch
+                {
+
+                }
                 selectableHovered = null;
             }
 

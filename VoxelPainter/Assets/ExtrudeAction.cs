@@ -10,8 +10,13 @@ public class ExtrudeAction : MonoBehaviour, IAction
     private Vector3 _firstPos;
     private List<Block> _blocks = new List<Block>();
 
+    public bool Cannot => SelectionManager.Instance.HasMoreThan1 || !SelectionManager.Instance.HasSelection;
+
     private void Update()
     {
+        if (Cannot)
+            return;
+
         var selectedAction = ActionManager.Instance.selectedAction;
         if (selectedAction.Result.Equals(this))
         {
@@ -22,6 +27,13 @@ public class ExtrudeAction : MonoBehaviour, IAction
 
             if (Input.GetMouseButtonDown(0))
             {
+                _blocks.Clear();
+
+                var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
+                var block = face.Block;
+
+                _blocks.Add(block);
+
                 _firstPos = pos;
             }
 
@@ -50,11 +62,18 @@ public class ExtrudeAction : MonoBehaviour, IAction
 
     private void RemoveBlock()
     {
+        if (_blocks.Count == 1)
+            return;
+
+        if (Cannot)
+            return;
+
         var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
         var faceType = face.FaceType;
 
         var block = face.Block;
 
+        SelectionManager.Instance.Deselect(face);
         _blocks.Remove(block);
         Destroy(block.gameObject);
 
@@ -63,14 +82,13 @@ public class ExtrudeAction : MonoBehaviour, IAction
         {
             var currentBlock = _blocks.LastOrDefault();
             var newFace = currentBlock.faces.FirstOrDefault(x => x.FaceType == faceType);
-            SelectionManager.Instance.Deselect(face);
             SelectionManager.Instance.Select(newFace);
         }
     }
 
     public void NewBlock()
     {
-        if (!SelectionManager.Instance.HasSelection)
+        if (Cannot)
             return;
 
         // Add a new block when you've dragged it out enough
