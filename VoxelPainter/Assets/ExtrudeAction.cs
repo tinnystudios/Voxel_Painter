@@ -1,5 +1,4 @@
 ﻿using core;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +8,7 @@ public class ExtrudeAction : MonoBehaviour, IAction
     public CreateBlockAction CreateBlockAction;
 
     private Vector3 _firstPos;
+    private List<Block> _blocks = new List<Block>();
 
     private void Update()
     {
@@ -30,20 +30,49 @@ public class ExtrudeAction : MonoBehaviour, IAction
                 // Create and destroy based on the Delta X. 
                 var delta = pos - _firstPos;
 
-                var x = Mathf.Abs(delta.x);
-                if (x >= 1)
+                if (delta.x >= 1)
                 {
                     NewBlock();
 
                     // Reset.
                     _firstPos = pos;
                 }
+                else if (delta.x <= -1)
+                {
+                    // Remove block in opposite direction.
+                    RemoveBlock();
+
+                    _firstPos = pos;
+                }
             }
+        }
+    }
+
+    private void RemoveBlock()
+    {
+        var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
+        var faceType = face.FaceType;
+
+        var block = face.Block;
+
+        _blocks.Remove(block);
+        Destroy(block.gameObject);
+
+        // Select previous
+        if (_blocks.Count > 0)
+        {
+            var currentBlock = _blocks.LastOrDefault();
+            var newFace = currentBlock.faces.FirstOrDefault(x => x.FaceType == faceType);
+            SelectionManager.Instance.Deselect(face);
+            SelectionManager.Instance.Select(newFace);
         }
     }
 
     public void NewBlock()
     {
+        if (!SelectionManager.Instance.HasSelection)
+            return;
+
         // Add a new block when you've dragged it out enough
         var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
         var faceType = face.FaceType;
@@ -59,6 +88,8 @@ public class ExtrudeAction : MonoBehaviour, IAction
         var newFace = block.faces.FirstOrDefault(x => x.FaceType == faceType);
         SelectionManager.Instance.Deselect(face);
         SelectionManager.Instance.Select(newFace);
+
+        _blocks.Add(block);
     }
 
     public void Deselect()

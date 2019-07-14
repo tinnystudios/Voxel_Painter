@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 using Action = core.Action;
 
 //To optimize this, make it only find block with marquee.
-public class SelectionManager : Singleton<SelectionManager> {
-
+public class SelectionManager : Singleton<SelectionManager>
+{
     public List<GameObject> selectedGameObjects;
     public List<Block> blocks;
 
@@ -17,7 +17,9 @@ public class SelectionManager : Singleton<SelectionManager> {
     RaycastHit lastHit;
     ISelectable selectableHovered;
     public core.Action clearAction;
-     
+
+    public bool HasSelection => selectedGameObjects.Count != 0;
+
     void Awake() {
         //InputManager.OnClickDown += OnClickDown;
     }
