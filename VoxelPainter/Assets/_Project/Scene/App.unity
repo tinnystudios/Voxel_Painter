@@ -1501,9 +1501,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 294400766}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 7
+  m_MaxValue: 13
   m_WholeNumbers: 1
-  m_Value: 3
+  m_Value: 8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -6309,7 +6309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createAction: {fileID: 634789769}
   textSize: {fileID: 1160906922}
-  mMinSize: 0.125
+  mMinSize: 0.00390625
   mSize: 1
   sizes: []
 --- !u!1 &1474227096

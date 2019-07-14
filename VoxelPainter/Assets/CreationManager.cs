@@ -14,8 +14,8 @@ public class CreationManager : Singleton<CreationManager> {
     
     private void Awake()
     {
-        float s = 0.125F;
-        for (int i = 1; i < 9; i++) {
+        float s = mMinSize;
+        for (int i = 1; i < 14; i++) {
             sizes.Add(s);
             s *= 2;
         }

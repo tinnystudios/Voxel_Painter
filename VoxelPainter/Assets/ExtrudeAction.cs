@@ -41,15 +41,17 @@ public class ExtrudeAction : MonoBehaviour, IAction
             {
                 // Create and destroy based on the Delta X. 
                 var delta = pos - _firstPos;
+                var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
+                var value = delta.x;
 
-                if (delta.x >= 1)
+                if (value >= 1)
                 {
                     NewBlock();
 
                     // Reset.
                     _firstPos = pos;
                 }
-                else if (delta.x <= -1)
+                else if (value <= -1)
                 {
                     // Remove block in opposite direction.
                     RemoveBlock();
@@ -82,6 +84,10 @@ public class ExtrudeAction : MonoBehaviour, IAction
         {
             var currentBlock = _blocks.LastOrDefault();
             var newFace = currentBlock.faces.FirstOrDefault(x => x.FaceType == faceType);
+
+            if (newFace == null)
+                Debug.LogError("New face is null");
+
             SelectionManager.Instance.Select(newFace);
         }
     }
