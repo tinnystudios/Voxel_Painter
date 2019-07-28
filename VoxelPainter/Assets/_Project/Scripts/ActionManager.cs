@@ -54,6 +54,15 @@ namespace core
 
             foreach (var action in actions)
             {
+                var actionMono = action.Result as MonoBehaviour;
+                var actionData = actionMono.GetComponent<ActionData>();
+
+                if (Input.GetKeyDown(actionData.ShortKey))
+                {
+                    SetSelectAction(action);
+                    continue;
+                }
+
                 var shortKey = GetShortKey(action);
                 if (shortKey != null && Input.GetKeyDown(shortKey.Key))
                 {

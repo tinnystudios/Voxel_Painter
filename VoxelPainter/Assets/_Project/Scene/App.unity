@@ -2167,7 +2167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: bc393abd6f236384b8aaf5032783218a, type: 3}
   m_Description: 
-  ShortKey: 0
+  ShortKey: 101
   ShortKey2: 0
 --- !u!224 &362290459 stripped
 RectTransform:
@@ -3689,7 +3689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 4f0025c61092deb4c8ac4888dd73afb9, type: 3}
   m_Description: 
-  ShortKey: 0
+  ShortKey: 98
   ShortKey2: 0
 --- !u!1 &663649289
 GameObject:
