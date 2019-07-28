@@ -27,6 +27,18 @@ public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     }
 
+    public void Select()
+    {
+        highlight.gameObject.SetActive(true);
+
+        // ressolve image too?
+    }
+
+    public void Deselect()
+    {
+        highlight.gameObject.SetActive(false);
+    }
+
     private void OnSlotGroupActionSelected(core.Action obj)
     {
         Init(obj);

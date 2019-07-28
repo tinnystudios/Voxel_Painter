@@ -61,9 +61,9 @@ namespace core
                 }
             }
 
+            //var toolManager = ToolManager.Instance;
 
-            var toolManager = ToolManager.Instance;
-
+            /*
             for (int i = 1; i < toolManager.slots.Count+1; i++) {
                 int index = i - 1;
                 var element = toolManager.slots[index].action;
@@ -73,6 +73,7 @@ namespace core
                     SetSelectAction(element);
                 }
             }
+            */
 
             if (Input.GetMouseButtonDown(0)) {
                 if (selectedAction != null)

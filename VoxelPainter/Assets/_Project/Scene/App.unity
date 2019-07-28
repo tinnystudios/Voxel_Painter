@@ -8692,33 +8692,61 @@ MonoBehaviour:
   - action:
       ObjectField: {fileID: 1404618786}
       ResultType: 
+    Actions:
+    - ObjectField: {fileID: 1404618786}
+      ResultType: 
+    - ObjectField: {fileID: 436288690}
+      ResultType: 
     slotButton: {fileID: 1540943184}
     sprite: {fileID: 21300000, guid: 4693102b074b3c54cba05e3686fc965f, type: 3}
   - action:
       ObjectField: {fileID: 634789769}
+      ResultType: 
+    Actions:
+    - ObjectField: {fileID: 634789769}
       ResultType: 
     slotButton: {fileID: 1644813146}
     sprite: {fileID: 21300000, guid: be5e6d22d6df5934386b1ec9a8641a3e, type: 3}
   - action:
       ObjectField: {fileID: 13245930}
       ResultType: 
+    Actions:
+    - ObjectField: {fileID: 13245930}
+      ResultType: 
     slotButton: {fileID: 4067117}
     sprite: {fileID: 21300000, guid: fc2303d8a40699d418f44b552b5c9b4f, type: 3}
   - action:
       ObjectField: {fileID: 220602187}
+      ResultType: 
+    Actions:
+    - ObjectField: {fileID: 220602187}
       ResultType: 
     slotButton: {fileID: 1016965420}
     sprite: {fileID: 21300000, guid: 333c00d2f3ab0b44a928c4dcd791cec8, type: 3}
   - action:
       ObjectField: {fileID: 321959199}
       ResultType: 
+    Actions:
+    - ObjectField: {fileID: 321959199}
+      ResultType: 
     slotButton: {fileID: 1817033219}
     sprite: {fileID: 21300000, guid: 15a9f1b5303600b4f8b8819b52628f74, type: 3}
   - action:
       ObjectField: {fileID: 890339867}
       ResultType: 
+    Actions:
+    - ObjectField: {fileID: 890339867}
+      ResultType: 
     slotButton: {fileID: 1516117679}
     sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
+  slotButtons:
+  - {fileID: 1540943184}
+  - {fileID: 1644813146}
+  - {fileID: 4067117}
+  - {fileID: 1016965420}
+  - {fileID: 1817033219}
+  - {fileID: 1516117679}
+  - {fileID: 1873292821}
 --- !u!1 &1873292818 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1800588081216172, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
@@ -8744,6 +8772,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Duration: 0.5
+--- !u!114 &1873292821 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114991239025104412, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
+    type: 3}
+  m_PrefabInstance: {fileID: 824491480}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873292818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dac3f6a08c8f0447bb6edb3816443a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1917418025
 GameObject:
   m_ObjectHideFlags: 0
