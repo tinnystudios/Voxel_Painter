@@ -4,9 +4,9 @@ using UnityEngine;
 using core;
 using System.Linq;
 
-public class ToolManager : Singleton<ToolManager> {
+public class ToolManager : Singleton<ToolManager>
+{
     public List<SlotContainer> slots;
-    public List<SlotButton> slotButtons;
 
     private void Awake()
     {
@@ -35,24 +35,17 @@ public class ToolManager : Singleton<ToolManager> {
 
     private void Instance_OnActionChanged(Action action)
     {
-        foreach (var slotButton in slotButtons)
-        {
-            
-        }
+
     }
 
     [System.Serializable]
     public class SlotContainer {
-        public core.Action action;
-
         public List<ActionModel> Actions;
-        public Sprite sprite;
-
         public SlotButton slotButton;
 
         public void Init() {
-            slotButton.image.sprite = sprite;
-            slotButton.Init(action);
+            slotButton.image.sprite = Actions[0].sprite;
+            slotButton.Init(Actions[0].Action);
         }
     }
 
