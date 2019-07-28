@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Destroy Tool (3)
+  m_Description: Eraser (D)
 --- !u!114 &13245932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c1355fd32e8de42b7133f8b51daed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: fc2303d8a40699d418f44b552b5c9b4f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 907b6a0a0354f4b4ca5efd7cb37e0e8a, type: 3}
   m_Description: 
+  ShortKey: 100
+  ShortKey2: 0
 --- !u!1 &21478842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Paint Tool (4)
+  m_Description: Paint (G)
 --- !u!114 &220602189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,6 +1080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 333c00d2f3ab0b44a928c4dcd791cec8, type: 3}
   m_Description: 
+  ShortKey: 103
+  ShortKey2: 0
 --- !u!1001 &251181896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1097,7 +1101,7 @@ PrefabInstance:
         type: 3}
       propertyPath: action.ObjectField
       value: 
-      objectReference: {fileID: 1404618786}
+      objectReference: {fileID: 634789769}
     - target: {fileID: 114991239025104412, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
         type: 3}
       propertyPath: m_Duration
@@ -1945,9 +1949,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 321959197}
-  - component: {fileID: 321959198}
   - component: {fileID: 321959199}
   - component: {fileID: 321959200}
+  - component: {fileID: 321959198}
   m_Layer: 0
   m_Name: Move
   m_TagString: Untagged
@@ -1981,8 +1985,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c1355fd32e8de42b7133f8b51daed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: b174b160e72b81d4d8ccc6d2eb3564ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15a9f1b5303600b4f8b8819b52628f74, type: 3}
   m_Description: 
+  ShortKey: 119
+  ShortKey2: 0
 --- !u!114 &321959199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2013,7 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: (W)
+  m_Description: Move (W)
 --- !u!1 &322875258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2146,7 +2152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: (E)
+  m_Description: Extrude (E)
 --- !u!114 &327405174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2159,8 +2165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c1355fd32e8de42b7133f8b51daed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: b174b160e72b81d4d8ccc6d2eb3564ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc393abd6f236384b8aaf5032783218a, type: 3}
   m_Description: 
+  ShortKey: 0
+  ShortKey2: 0
 --- !u!224 &362290459 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3280348428031593622, guid: f09aeddc6a6c97c43b04b4a2a505f894,
@@ -2275,7 +2283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Rectangular Marquee Tool (1)
+  m_Description: Marquee Select (L)
 --- !u!114 &436288693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2290,6 +2298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
   m_Description: 
+  ShortKey: 108
+  ShortKey2: 0
 --- !u!1 &449041184
 GameObject:
   m_ObjectHideFlags: 0
@@ -3664,7 +3674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Create Block Tool (2)
+  m_Description: Draw (B)
 --- !u!114 &634789771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3677,8 +3687,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c1355fd32e8de42b7133f8b51daed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: be5e6d22d6df5934386b1ec9a8641a3e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f0025c61092deb4c8ac4888dd73afb9, type: 3}
   m_Description: 
+  ShortKey: 0
+  ShortKey2: 0
 --- !u!1 &663649289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4096,7 +4108,7 @@ PrefabInstance:
         type: 3}
       propertyPath: action.ObjectField
       value: 
-      objectReference: {fileID: 1404618786}
+      objectReference: {fileID: 220602187}
     - target: {fileID: 114991239025104412, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
         type: 3}
       propertyPath: m_Duration
@@ -4666,7 +4678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Scale Tool (2)
+  m_Description: Scale (R)
 --- !u!114 &890339869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4679,8 +4691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c1355fd32e8de42b7133f8b51daed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: b174b160e72b81d4d8ccc6d2eb3564ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56559156e027c1a409414feaabd327b5, type: 3}
   m_Description: 
+  ShortKey: 114
+  ShortKey2: 0
 --- !u!1 &892239312
 GameObject:
   m_ObjectHideFlags: 0
@@ -6128,7 +6142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Select Tool (0)
+  m_Description: Select (M)
 --- !u!114 &1404618788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6143,6 +6157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 4693102b074b3c54cba05e3686fc965f, type: 3}
   m_Description: 
+  ShortKey: 109
+  ShortKey2: 0
 --- !u!1 &1407179845
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,6 +8123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: b174b160e72b81d4d8ccc6d2eb3564ed, type: 3}
   m_Description: 
+  ShortKey: 0
+  ShortKey2: 0
 --- !u!1 &1723476025 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1800588081216172, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
@@ -8355,7 +8373,7 @@ PrefabInstance:
         type: 3}
       propertyPath: action.ObjectField
       value: 
-      objectReference: {fileID: 1404618786}
+      objectReference: {fileID: 890339867}
     - target: {fileID: 114991239025104412, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
         type: 3}
       propertyPath: m_Duration
@@ -8491,7 +8509,7 @@ PrefabInstance:
         type: 3}
       propertyPath: action.ObjectField
       value: 
-      objectReference: {fileID: 1404618786}
+      objectReference: {fileID: 321959199}
     - target: {fileID: 114991239025104412, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
         type: 3}
       propertyPath: m_Duration
@@ -8689,10 +8707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots:
-  - action:
-      ObjectField: {fileID: 1404618786}
-      ResultType: 
-    Actions:
+  - Actions:
     - Action:
         ObjectField: {fileID: 1404618786}
         ResultType: 
@@ -8701,66 +8716,43 @@ MonoBehaviour:
         ObjectField: {fileID: 436288690}
         ResultType: 
       sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
-    sprite: {fileID: 21300000, guid: 4693102b074b3c54cba05e3686fc965f, type: 3}
     slotButton: {fileID: 1540943184}
-  - action:
-      ObjectField: {fileID: 634789769}
-      ResultType: 
-    Actions:
+  - Actions:
     - Action:
         ObjectField: {fileID: 634789769}
         ResultType: 
-      sprite: {fileID: 21300000, guid: be5e6d22d6df5934386b1ec9a8641a3e, type: 3}
-    sprite: {fileID: 21300000, guid: be5e6d22d6df5934386b1ec9a8641a3e, type: 3}
+      sprite: {fileID: 21300000, guid: 4f0025c61092deb4c8ac4888dd73afb9, type: 3}
     slotButton: {fileID: 1644813146}
-  - action:
-      ObjectField: {fileID: 13245930}
-      ResultType: 
-    Actions:
+  - Actions:
     - Action:
         ObjectField: {fileID: 13245930}
         ResultType: 
-      sprite: {fileID: 21300000, guid: fc2303d8a40699d418f44b552b5c9b4f, type: 3}
-    sprite: {fileID: 21300000, guid: fc2303d8a40699d418f44b552b5c9b4f, type: 3}
+      sprite: {fileID: 21300000, guid: 907b6a0a0354f4b4ca5efd7cb37e0e8a, type: 3}
     slotButton: {fileID: 4067117}
-  - action:
-      ObjectField: {fileID: 220602187}
-      ResultType: 
-    Actions:
+  - Actions:
     - Action:
         ObjectField: {fileID: 220602187}
         ResultType: 
       sprite: {fileID: 21300000, guid: 333c00d2f3ab0b44a928c4dcd791cec8, type: 3}
-    sprite: {fileID: 21300000, guid: 333c00d2f3ab0b44a928c4dcd791cec8, type: 3}
     slotButton: {fileID: 1016965420}
-  - action:
-      ObjectField: {fileID: 321959199}
-      ResultType: 
-    Actions:
+  - Actions:
     - Action:
         ObjectField: {fileID: 321959199}
         ResultType: 
       sprite: {fileID: 21300000, guid: 15a9f1b5303600b4f8b8819b52628f74, type: 3}
-    sprite: {fileID: 21300000, guid: 15a9f1b5303600b4f8b8819b52628f74, type: 3}
     slotButton: {fileID: 1817033219}
-  - action:
-      ObjectField: {fileID: 890339867}
-      ResultType: 
-    Actions:
+  - Actions:
+    - Action:
+        ObjectField: {fileID: 327405172}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: bc393abd6f236384b8aaf5032783218a, type: 3}
+    slotButton: {fileID: 1873292821}
+  - Actions:
     - Action:
         ObjectField: {fileID: 890339867}
         ResultType: 
-      sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
-    sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
+      sprite: {fileID: 21300000, guid: 56559156e027c1a409414feaabd327b5, type: 3}
     slotButton: {fileID: 1516117679}
-  slotButtons:
-  - {fileID: 1540943184}
-  - {fileID: 1644813146}
-  - {fileID: 4067117}
-  - {fileID: 1016965420}
-  - {fileID: 1817033219}
-  - {fileID: 1516117679}
-  - {fileID: 1873292821}
 --- !u!1 &1873292818 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1800588081216172, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
@@ -8965,7 +8957,7 @@ PrefabInstance:
         type: 3}
       propertyPath: action.ObjectField
       value: 
-      objectReference: {fileID: 1404618786}
+      objectReference: {fileID: 13245930}
     - target: {fileID: 114991239025104412, guid: ed56d539fb78aa94d89ffd4cdc5b4a56,
         type: 3}
       propertyPath: m_Duration

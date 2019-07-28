@@ -44,7 +44,6 @@ public class ToolManager : Singleton<ToolManager>
         public SlotButton slotButton;
 
         public void Init() {
-            slotButton.image.sprite = Actions[0].sprite;
             slotButton.Init(Actions[0].Action);
         }
     }

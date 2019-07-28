@@ -63,11 +63,10 @@ public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     }
 
-    public void Init(core.Action act)
+    public void Init(core.Action action)
     {
-        action = act;
-
         var actionData = action.Result.gameObject.GetComponent<ActionData>();
+        this.action = action;
 
         if (actionData != null)
         {
