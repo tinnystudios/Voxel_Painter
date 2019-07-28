@@ -6142,7 +6142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845af474c8f9f7e4686eb613aaac80c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Description: Select (M)
+  m_Description: 'Select (M)
+
+    Temp Toggle (CTRL)'
 --- !u!114 &1404618788
 MonoBehaviour:
   m_ObjectHideFlags: 0
