@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using core;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IToolTipDisplay, IPointerDownHandler, IPointerExitHandler {
 
@@ -20,17 +21,19 @@ public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         {
             m_SlotGroup.OnSlotGroupActionSelected += OnSlotGroupActionSelected;
         }
+        else
+        {
+
+        }
     }
 
     private void OnSlotGroupActionSelected(core.Action obj)
     {
-        Debug.Log("Changed");
         Init(obj);
     }
 
     void Update()
     {
-
         if (mStartTime != 0 && Time.time - mStartTime >= m_Duration)
         {
             if (m_SlotGroup != null)
@@ -38,7 +41,6 @@ public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
                 m_SlotGroup.Activate();
             }
         }
-
     }
 
     public IToolTip ToolTip
