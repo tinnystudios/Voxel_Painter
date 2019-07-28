@@ -21,9 +21,10 @@ public class ToolManager : Singleton<ToolManager> {
 
         foreach (var slot in slots)
         {
-            if (slot.Actions.Any(x => x.Object == selectedAction.Object))
+            if (slot.Actions.Any(x => x.Action.Object == selectedAction.Object))
             {
-                slot.slotButton.Select();
+                var action = slot.Actions.FirstOrDefault(x => x.Action.Object == selectedAction.Object);
+                slot.slotButton.Select(action.sprite);
             }
             else
             {
@@ -44,15 +45,21 @@ public class ToolManager : Singleton<ToolManager> {
     public class SlotContainer {
         public core.Action action;
 
-        // We may want to bind more than 1 action to this button
-        public List<core.Action> Actions;
+        public List<ActionModel> Actions;
+        public Sprite sprite;
 
         public SlotButton slotButton;
-        public Sprite sprite;
 
         public void Init() {
             slotButton.image.sprite = sprite;
             slotButton.Init(action);
         }
+    }
+
+    [System.Serializable]
+    public class ActionModel
+    {
+        public core.Action Action;
+        public Sprite sprite;
     }
 }

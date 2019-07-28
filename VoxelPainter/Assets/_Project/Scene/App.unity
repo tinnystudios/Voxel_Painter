@@ -8693,52 +8693,66 @@ MonoBehaviour:
       ObjectField: {fileID: 1404618786}
       ResultType: 
     Actions:
-    - ObjectField: {fileID: 1404618786}
-      ResultType: 
-    - ObjectField: {fileID: 436288690}
-      ResultType: 
-    slotButton: {fileID: 1540943184}
+    - Action:
+        ObjectField: {fileID: 1404618786}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: 4693102b074b3c54cba05e3686fc965f, type: 3}
+    - Action:
+        ObjectField: {fileID: 436288690}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
     sprite: {fileID: 21300000, guid: 4693102b074b3c54cba05e3686fc965f, type: 3}
+    slotButton: {fileID: 1540943184}
   - action:
       ObjectField: {fileID: 634789769}
       ResultType: 
     Actions:
-    - ObjectField: {fileID: 634789769}
-      ResultType: 
-    slotButton: {fileID: 1644813146}
+    - Action:
+        ObjectField: {fileID: 634789769}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: be5e6d22d6df5934386b1ec9a8641a3e, type: 3}
     sprite: {fileID: 21300000, guid: be5e6d22d6df5934386b1ec9a8641a3e, type: 3}
+    slotButton: {fileID: 1644813146}
   - action:
       ObjectField: {fileID: 13245930}
       ResultType: 
     Actions:
-    - ObjectField: {fileID: 13245930}
-      ResultType: 
-    slotButton: {fileID: 4067117}
+    - Action:
+        ObjectField: {fileID: 13245930}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: fc2303d8a40699d418f44b552b5c9b4f, type: 3}
     sprite: {fileID: 21300000, guid: fc2303d8a40699d418f44b552b5c9b4f, type: 3}
+    slotButton: {fileID: 4067117}
   - action:
       ObjectField: {fileID: 220602187}
       ResultType: 
     Actions:
-    - ObjectField: {fileID: 220602187}
-      ResultType: 
-    slotButton: {fileID: 1016965420}
+    - Action:
+        ObjectField: {fileID: 220602187}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: 333c00d2f3ab0b44a928c4dcd791cec8, type: 3}
     sprite: {fileID: 21300000, guid: 333c00d2f3ab0b44a928c4dcd791cec8, type: 3}
+    slotButton: {fileID: 1016965420}
   - action:
       ObjectField: {fileID: 321959199}
       ResultType: 
     Actions:
-    - ObjectField: {fileID: 321959199}
-      ResultType: 
-    slotButton: {fileID: 1817033219}
+    - Action:
+        ObjectField: {fileID: 321959199}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: 15a9f1b5303600b4f8b8819b52628f74, type: 3}
     sprite: {fileID: 21300000, guid: 15a9f1b5303600b4f8b8819b52628f74, type: 3}
+    slotButton: {fileID: 1817033219}
   - action:
       ObjectField: {fileID: 890339867}
       ResultType: 
     Actions:
-    - ObjectField: {fileID: 890339867}
-      ResultType: 
-    slotButton: {fileID: 1516117679}
+    - Action:
+        ObjectField: {fileID: 890339867}
+        ResultType: 
+      sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
     sprite: {fileID: 21300000, guid: 25904e57745ca3643a69538298b5c8c7, type: 3}
+    slotButton: {fileID: 1516117679}
   slotButtons:
   - {fileID: 1540943184}
   - {fileID: 1644813146}

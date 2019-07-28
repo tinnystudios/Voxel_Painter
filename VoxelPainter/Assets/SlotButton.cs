@@ -27,11 +27,10 @@ public class SlotButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     }
 
-    public void Select()
+    public void Select(Sprite spirte)
     {
         highlight.gameObject.SetActive(true);
-
-        // ressolve image too?
+        image.sprite = spirte;
     }
 
     public void Deselect()
