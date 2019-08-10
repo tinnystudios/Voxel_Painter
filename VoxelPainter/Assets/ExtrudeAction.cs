@@ -9,8 +9,16 @@ public class ExtrudeAction : MonoBehaviour, IAction
 
     private Vector3 _firstPos;
     private List<Block> _blocks = new List<Block>();
+    private Action _action;
+
+    public HistoryTracker<List<Block>> history = new HistoryTracker<List<Block>>();
 
     public bool Cannot => SelectionManager.Instance.HasMoreThan1 || !SelectionManager.Instance.HasSelection;
+
+    private void Awake()
+    {
+        _action = new Action(GetComponent<IAction>());
+    }
 
     private void Update()
     {
@@ -59,6 +67,19 @@ public class ExtrudeAction : MonoBehaviour, IAction
                     _firstPos = pos;
                 }
             }
+        }
+
+        if (_blocks.Count <= 1)
+            return;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            var createdBlocks = _blocks.GetRange(1, _blocks.Count-1);
+            var container = history.NewInstance<List<Block>>();
+            container.mInitial = createdBlocks;
+            history.undoList.Add(container);
+
+            HistoryManager.Instance.AddAction(_action);
         }
     }
 
@@ -128,12 +149,22 @@ public class ExtrudeAction : MonoBehaviour, IAction
 
     public void Redo()
     {
+        var element = history.Redo();
 
+        foreach (var block in element.mInitial)
+        {
+            block.gameObject.SetActive(true);
+        }
     }
 
     public void Undo()
     {
-        throw new System.NotImplementedException();
+        var element = history.Undo();
+
+        foreach (var block in element.mInitial)
+        {
+            block.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateAction()

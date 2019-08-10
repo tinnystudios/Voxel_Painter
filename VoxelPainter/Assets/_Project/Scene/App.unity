@@ -9775,6 +9775,11 @@ PrefabInstance:
       propertyPath: Group
       value: 
       objectReference: {fileID: 1500746373}
+    - target: {fileID: 7115215118508370802, guid: 0bcfdcc3e7a07b742b24bb5c53e81ef7,
+        type: 3}
+      propertyPath: IsOpened
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4215598933528026813, guid: 0bcfdcc3e7a07b742b24bb5c53e81ef7,
         type: 3}
       propertyPath: m_Text
