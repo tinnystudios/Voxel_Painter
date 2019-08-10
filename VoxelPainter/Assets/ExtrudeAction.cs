@@ -6,6 +6,7 @@ using UnityEngine;
 public class ExtrudeAction : MonoBehaviour, IAction
 {
     public CreateBlockAction CreateBlockAction;
+    public SelectAction SelectAction;
 
     private Vector3 _firstPos;
     private List<Block> _blocks = new List<Block>();
@@ -80,6 +81,9 @@ public class ExtrudeAction : MonoBehaviour, IAction
             history.undoList.Add(container);
 
             HistoryManager.Instance.AddAction(_action);
+
+            var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
+            SelectAction.SelectFace(face);
         }
     }
 
@@ -98,7 +102,7 @@ public class ExtrudeAction : MonoBehaviour, IAction
 
         SelectionManager.Instance.Deselect(face);
         _blocks.Remove(block);
-        Destroy(block.gameObject);
+        block.gameObject.SetActive(false);
 
         // Select previous
         if (_blocks.Count > 0)
@@ -130,11 +134,22 @@ public class ExtrudeAction : MonoBehaviour, IAction
 
         block.transform.position += delta;
 
-        var newFace = block.faces.FirstOrDefault(x => x.FaceType == faceType);
-        SelectionManager.Instance.Deselect(face);
-        SelectionManager.Instance.Select(newFace);
+        SelectBlockFace(block);
 
         _blocks.Add(block);
+    }
+
+    public void SelectBlockFace(Block block)
+    {
+        var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
+        var faceType = face.FaceType;
+
+        var newFace = block.faces.FirstOrDefault(x => x.FaceType == faceType);
+
+        // The first deselect need to be an action.
+        SelectionManager.Instance.Clear();
+
+        SelectionManager.Instance.Select(newFace);
     }
 
     public void Deselect()
@@ -155,6 +170,10 @@ public class ExtrudeAction : MonoBehaviour, IAction
         {
             block.gameObject.SetActive(true);
         }
+
+        // SelectBlockFace(element.mInitial.Last());
+
+        // Apply selector here.
     }
 
     public void Undo()

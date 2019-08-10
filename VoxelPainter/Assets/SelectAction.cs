@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using core;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //You probably still need to make it revert base on the state though
@@ -7,6 +9,13 @@ public class SelectAction : MonoBehaviour, IAction
     public List<SelectContainer> undoList = new List<SelectContainer>();
     public List<SelectContainer> redoList = new List<SelectContainer>();
     public HistoryTracker<List<ISelectable>> history = new HistoryTracker<List<ISelectable>>();
+
+    private core.Action _action;
+
+    private void Awake()
+    {
+        _action = new core.Action(this);
+    }
 
     public void UpdateAction() { }
 
@@ -95,6 +104,23 @@ public class SelectAction : MonoBehaviour, IAction
             lastSelected = iSelectable;
             active = SelectionManager.Instance.hashSelectable.Contains(lastSelected);
         }
+    }
 
+    public void SelectFace(Face newFace)
+    {
+        //SelectionManager.Instance.Clear();
+        SelectionManager.Instance.Select(newFace);
+
+        // Use this action itself.
+        //ActionManager.Instance.Use(_action);
+
+        List<ISelectable> selectables = new List<ISelectable>();
+        selectables.Add(newFace);
+        var instance = history.NewInstance<List<ISelectable>>();
+        instance.isActive = SelectionManager.Instance.hashSelectable.Contains(newFace);
+        instance.mInitial = selectables;
+        history.undoList.Add(instance);
+
+        HistoryManager.Instance.AddAction(_action);
     }
 }
