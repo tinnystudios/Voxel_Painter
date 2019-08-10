@@ -220,19 +220,22 @@ public class SelectionManager : Singleton<SelectionManager>
     }
 
     public void DeselectAll() {
-
+        Clear(false);
     }
 
     public void SelectAll() {
 
     }
-    public void Clear() {
+    public void Clear(bool addAction = true) {
 
         if (hashSelectable.Count <= 0)
             return;
 
-        clearAction.Result.Use();
-        HistoryManager.Instance.AddAction(clearAction);
+        if (addAction)
+        {
+            clearAction.Result.Use();
+            HistoryManager.Instance.AddAction(clearAction);
+        }
 
         foreach (ISelectable iSelectable in hashSelectable) {
             iSelectable.Deselect();

@@ -147,8 +147,7 @@ public class ExtrudeAction : MonoBehaviour, IAction
         var newFace = block.faces.FirstOrDefault(x => x.FaceType == faceType);
 
         // The first deselect need to be an action.
-        SelectionManager.Instance.Clear();
-
+        SelectionManager.Instance.Deselect(face);
         SelectionManager.Instance.Select(newFace);
     }
 
@@ -171,6 +170,7 @@ public class ExtrudeAction : MonoBehaviour, IAction
             block.gameObject.SetActive(true);
         }
 
+        SelectionManager.Instance.DeselectAll();
         // SelectBlockFace(element.mInitial.Last());
 
         // Apply selector here.
