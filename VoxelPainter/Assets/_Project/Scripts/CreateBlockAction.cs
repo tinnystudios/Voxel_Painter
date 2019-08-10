@@ -92,9 +92,12 @@ public class CreateBlockAction : MonoBehaviour, IAction
 
     public Block CreateBlock()
     {
+        Vector3 scale = Vector3.one * size;
+
         GameObject go = Instantiate(block);
         var instance = go.GetComponent<Block>();
         instance.SetColor(ColorManager.Instance.primaryColor);
+        instance.transform.localScale = scale;
 
         return instance;
     }

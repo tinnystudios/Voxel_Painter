@@ -127,6 +127,7 @@ public class ExtrudeAction : MonoBehaviour, IAction
         var faceType = face.FaceType;
 
         var block = CreateBlockAction.CreateBlock();
+
         var parent = face.transform.parent;
 
         block.transform.position = parent.position;
@@ -171,9 +172,6 @@ public class ExtrudeAction : MonoBehaviour, IAction
         }
 
         SelectionManager.Instance.DeselectAll();
-        // SelectBlockFace(element.mInitial.Last());
-
-        // Apply selector here.
     }
 
     public void Undo()
