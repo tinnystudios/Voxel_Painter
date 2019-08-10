@@ -126,7 +126,7 @@ public class ExtrudeAction : MonoBehaviour, IAction
         var face = SelectionManager.Instance.selectedGameObjects[0].GetComponent<Face>();
         var faceType = face.FaceType;
 
-        var block = CreateBlockAction.CreateBlock();
+        var block = CreateBlockAction.Duplicate(face.Block);
 
         var parent = face.transform.parent;
 

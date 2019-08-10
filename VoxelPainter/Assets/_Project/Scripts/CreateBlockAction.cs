@@ -90,6 +90,11 @@ public class CreateBlockAction : MonoBehaviour, IAction
 
     }
 
+    public Block Duplicate(Block block)
+    {
+        return Instantiate(block);
+    }
+
     public Block CreateBlock()
     {
         Vector3 scale = Vector3.one * size;
