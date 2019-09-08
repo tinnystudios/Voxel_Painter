@@ -147,6 +147,12 @@ public class SelectionManager : Singleton<SelectionManager>
         return iSelectable;
     }
 
+    public void SelectBlock(Block block)
+    {
+        foreach (var face in block.faces)
+            Select(face);
+    }
+
     public void Select(ISelectable iSelectable) {
         if (hashSelectable.Contains(iSelectable))
             return;
@@ -173,6 +179,14 @@ public class SelectionManager : Singleton<SelectionManager>
         AddBlock(iSelectable);
         CheckPivot();
     }
+
+    /*
+    public void Add(Block block)
+    {
+        if (!blocks.Contains(block))
+            blocks.Add(block);
+    }
+    */
 
     public void AddBlock(ISelectable iSelectable) {
         Face face = iSelectable.gameObject.GetComponent<Face>();

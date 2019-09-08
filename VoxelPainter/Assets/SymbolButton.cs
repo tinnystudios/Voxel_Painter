@@ -7,7 +7,7 @@ public class SymbolModel
     public string Id { get; set; }
 }
 
-public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IDropHandler
+public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IDropHandler, IPointerClickHandler
 {
     public SymbolModel Model { get; set; }
     public RawImage Icon;
@@ -76,5 +76,10 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
         _lastFace.SetColor(_lastFaceColor);
         _lastFace = null;
 
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        SymbolManager.Instance.SelectSymbolButton(this);
     }
 }

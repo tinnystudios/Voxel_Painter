@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -11,12 +12,32 @@ public class SymbolManager : Singleton<SymbolManager>
 
     private List<SymbolButton> _symbolButtons = new List<SymbolButton>();
 
-    public void Add()
+    public SymbolButton SelectedSymbolButton { get; private set; }
+
+    public void Save(string id = null)
     {
         var blocks = SelectionManager.Instance.blocks;
-        ApplicationManager.Instance.SaveSymbol(blocks);
+        ApplicationManager.Instance.SaveSymbol(blocks, id);
+        ReloadSymbolButtons();
 
-        // Clear all
+        // TODO
+        if (id != null)
+        {
+            // Update all instances.
+        }
+    }
+
+    public void Delete(string id)
+    {
+        File.Delete(ApplicationManager.Instance.MakeSymbolPath(id));
+
+#if UNITY_EDITOR
+        UnityEditor.AssetDatabase.Refresh();
+#endif
+    }
+
+    private void ReloadSymbolButtons()
+    {
         foreach (var symbol in _symbolButtons)
         {
             Destroy(symbol.gameObject);
@@ -67,8 +88,15 @@ public class SymbolManager : Singleton<SymbolManager>
         var lowestFace = LowestFace(lowestBlock);
         var selectedFace = HighestFace(selectedBlock.transform);
 
-        var pivot = SetupPivot(lowestFace, transforms);
+        var pivot = SetupPivot(lowestFace, transforms, id);
         pivot.position = selectedFace.transform.position;
+    }
+
+    public void SelectSymbolButton(SymbolButton symbolButton)
+    {
+        SelectedSymbolButton = symbolButton;
+        
+        // Show context menu? Click else where, hide context menu?
     }
 
     private Face LowestFace(Transform block)
@@ -91,10 +119,13 @@ public class SymbolManager : Singleton<SymbolManager>
         return lowestFace;
     }
 
-    private Transform SetupPivot(Face lowestFace, List<Transform> transforms)
+    private Transform SetupPivot(Face lowestFace, List<Transform> transforms, string id)
     {
         var pivot = new GameObject("Symbol");
         pivot.transform.position = lowestFace.transform.position;
+
+        var prefabInstance = pivot.AddComponent<Prefab>();
+        prefabInstance.SetId(id);
 
         foreach (var t in transforms)
             t.SetParent(pivot.transform);

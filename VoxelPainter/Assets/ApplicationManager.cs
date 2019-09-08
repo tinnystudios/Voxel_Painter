@@ -49,14 +49,14 @@ public class ApplicationManager : Singleton<ApplicationManager>
         LoadPresets();
     }
 
-    public void SaveSymbol(List<Block> blocks)
+    public void SaveSymbol(List<Block> blocks, string id = null)
     {
         if (blocks.Count == 0)
             return;
 
         var data = new AppData();
 
-        data.Id = Guid.NewGuid().ToString();
+        data.Id = id ?? Guid.NewGuid().ToString();
 
         foreach (var block in blocks)
         {
@@ -110,6 +110,11 @@ public class ApplicationManager : Singleton<ApplicationManager>
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
 #endif
+    }
+
+    public string MakeSymbolPath(string id)
+    {
+        return SymbolPath + id + ".json";
     }
 
     IEnumerator Screenshot(Transform[] transforms, string id)
