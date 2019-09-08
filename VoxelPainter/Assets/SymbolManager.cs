@@ -10,6 +10,8 @@ public class SymbolManager : Singleton<SymbolManager>
     public Transform SymbolContainer;
     public SymbolButton SymbolPrefab;
 
+    public PrefabContextMenu PrefabContextMenu;
+
     private List<SymbolButton> _symbolButtons = new List<SymbolButton>();
 
     public SymbolButton SelectedSymbolButton { get; private set; }
@@ -95,7 +97,7 @@ public class SymbolManager : Singleton<SymbolManager>
     public void SelectSymbolButton(SymbolButton symbolButton)
     {
         SelectedSymbolButton = symbolButton;
-        
+        PrefabContextMenu.SetContext(symbolButton.Model.Id);
         // Show context menu? Click else where, hide context menu?
     }
 
