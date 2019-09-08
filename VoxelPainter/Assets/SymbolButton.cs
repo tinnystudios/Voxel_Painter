@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -7,8 +8,11 @@ public class SymbolModel
     public string Id { get; set; }
 }
 
-public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IDropHandler, IPointerClickHandler
+public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IDropHandler, IPointerDownHandler, IPointerClickHandler
 {
+    public static Action<SymbolButton> OnMove;
+    public static Action<SymbolButton> OnClick;
+
     public SymbolModel Model { get; set; }
     public RawImage Icon;
     // Layer actually spawn the symbol obj
@@ -19,6 +23,8 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
     private Vector3 _posBeforeDrag;
     private Face _lastFace;
     private Color _lastFaceColor;
+
+    public float Distance => Vector3.Distance(transform.position, _posBeforeDrag);
 
     public void SetIcon(Texture2D texture)
     {
@@ -66,6 +72,9 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
     {
         transform.position = _posBeforeDrag;
 
+        if (_lastFace == null)
+            return;
+
         // Spawn at last face
         var block = _lastFace.GetComponentInParent<Block>();
 
@@ -75,11 +84,18 @@ public class SymbolButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
 
         _lastFace.SetColor(_lastFaceColor);
         _lastFace = null;
-
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SymbolManager.Instance.SelectSymbolButton(this);
+        Debug.Log($"Distance when clicked {Distance}");
+
+        if(Distance < 0.1F)
+            OnClick?.Invoke(this);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _posBeforeDrag = transform.position;
     }
 }

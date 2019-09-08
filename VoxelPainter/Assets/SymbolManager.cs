@@ -20,15 +20,27 @@ public class SymbolManager : Singleton<SymbolManager>
     {
         var blocks = SelectionManager.Instance.blocks;
         ApplicationManager.Instance.SaveSymbol(blocks, id);
-        ReloadSymbolButtons();
+        StartCoroutine(SaveRoutine(id));
+    }
 
-        // TODO
+    IEnumerator SaveRoutine(string id)
+    {
+        yield return ReloadSymbolButtons();
+
         if (id != null)
         {
             // Update all instances.
-        }
-    }
+            var instances = FindObjectsOfType<Prefab>().Where(x => x.Id == id);
 
+            foreach (var instance in instances)
+            {
+                instance.UpdateChanges();
+            }
+        }
+
+        SelectionManager.Instance.Clear();
+    }
+    
     public void Delete(string id)
     {
         File.Delete(ApplicationManager.Instance.MakeSymbolPath(id));
@@ -36,9 +48,11 @@ public class SymbolManager : Singleton<SymbolManager>
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
 #endif
+
+        StartCoroutine(ReloadSymbolButtons());
     }
 
-    private void ReloadSymbolButtons()
+    private IEnumerator ReloadSymbolButtons()
     {
         foreach (var symbol in _symbolButtons)
         {
@@ -46,7 +60,8 @@ public class SymbolManager : Singleton<SymbolManager>
         }
 
         _symbolButtons.Clear();
-        StartCoroutine(Reload());
+
+        yield return Reload();
     }
 
     private IEnumerator Reload()
@@ -55,19 +70,19 @@ public class SymbolManager : Singleton<SymbolManager>
         ApplicationManager.Instance.ReloadSymbols();
     }
 
-    private List<Transform> GenerateBlocks(string id)
+    private List<Block> GenerateBlocks(string id)
     {
         var data = ApplicationManager.Instance.GetSymbol(id);
         var blocks = data.m_Blocks;
-        var transforms = new List<Transform>();
+        var blockInstances = new List<Block>();
 
         foreach (var blockData in blocks)
         {
             var instance = ApplicationManager.Instance.CreateBlock(blockData);
-            transforms.Add(instance.transform);
+            blockInstances.Add(instance);
         }
 
-        return transforms;
+        return blockInstances;
     }
 
     private Transform Lowest(List<Transform> transforms)
@@ -83,21 +98,31 @@ public class SymbolManager : Singleton<SymbolManager>
         return lowest;
     }
 
+    public void Load(Prefab prefab, string id)
+    {
+        var transforms = GenerateBlocks(id);
+        var lowestBlock = Lowest(transforms.Select(x => x.transform).ToList());
+        var lowestFace = LowestFace(lowestBlock);
+
+        SetUpPivot(prefab, lowestFace, transforms);
+        prefab.transform.position = prefab.SelectedPosition;
+    }
+
     public void Load(Block selectedBlock, string id)
     {
         var transforms = GenerateBlocks(id);
-        var lowestBlock = Lowest(transforms);
+        var lowestBlock = Lowest(transforms.Select(x => x.transform).ToList());
         var lowestFace = LowestFace(lowestBlock);
         var selectedFace = HighestFace(selectedBlock.transform);
 
-        var pivot = SetupPivot(lowestFace, transforms, id);
+        var pivot = SetupPivot(lowestFace, selectedFace, transforms, id);
         pivot.position = selectedFace.transform.position;
     }
 
     public void SelectSymbolButton(SymbolButton symbolButton)
     {
         SelectedSymbolButton = symbolButton;
-        PrefabContextMenu.SetContext(symbolButton.Model.Id);
+        // PrefabContextMenu.SetContext(symbolButton.Model.Id);
         // Show context menu? Click else where, hide context menu?
     }
 
@@ -121,16 +146,27 @@ public class SymbolManager : Singleton<SymbolManager>
         return lowestFace;
     }
 
-    private Transform SetupPivot(Face lowestFace, List<Transform> transforms, string id)
+    private Transform SetUpPivot(Prefab prefab, Face lowestFace, List<Block> blocks)
+    {
+        prefab.transform.position = lowestFace.transform.position;
+        prefab.Setup(prefab.Id, blocks, prefab.SelectedPosition);
+
+        foreach (var b in blocks)
+            b.transform.SetParent(prefab.transform);
+
+        return prefab.transform;
+    }
+
+    private Transform SetupPivot(Face lowestFace, Face selectedFace, List<Block> blocks, string id)
     {
         var pivot = new GameObject("Symbol");
         pivot.transform.position = lowestFace.transform.position;
 
         var prefabInstance = pivot.AddComponent<Prefab>();
-        prefabInstance.SetId(id);
+        prefabInstance.Setup(id, blocks, selectedFace.transform.position);
 
-        foreach (var t in transforms)
-            t.SetParent(pivot.transform);
+        foreach (var b in blocks)
+            b.transform.SetParent(pivot.transform);
 
         return pivot.transform;
     }
