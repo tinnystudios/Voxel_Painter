@@ -47,6 +47,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
         SaveDataPath += SaveDataFileName;
 
         LoadPresets();
+
+        Debug.Log(SaveDataPath);
     }
 
     public void SaveSymbol(List<Block> blocks, string id = null)
@@ -250,6 +252,14 @@ public class ApplicationManager : Singleton<ApplicationManager>
             instance.gameObject.transform.position = block.position;
             instance.gameObject.transform.localScale = block.scale;
             instance.Load(block);
+
+            CreatePrefabForBlock(instance);
+        }
+
+        // Go through everything prefab and see if they need updating?
+        foreach (var prefab in _prefabLookup.ToList().Select(x => x.Value))
+        {
+            prefab.UpdateChanges();
         }
     }
 
@@ -266,4 +276,27 @@ public class ApplicationManager : Singleton<ApplicationManager>
     {
         SceneManager.LoadScene(0);
     }
+
+    public void CreatePrefabForBlock(Block block)
+    {
+        var data = block.mBlockData;
+
+        if (!string.IsNullOrEmpty(data.PrefabData.Id))
+        {
+            var pData = data.PrefabData;
+
+            if (!_prefabLookup.ContainsKey(data.PrefabData.GuidInstance))
+            {
+                var prefab = new GameObject("Symbol").AddComponent<Prefab>();
+                var list = new List<Block>();
+                prefab.Setup(pData.Id, list, pData.SelectedPosition, guid: pData.GuidInstance);
+                _prefabLookup.Add(pData.GuidInstance, prefab);
+            }
+
+            var prefabInstance = _prefabLookup[pData.GuidInstance];
+            prefabInstance.Add(block);
+        }
+    }
+
+    private Dictionary<string, Prefab> _prefabLookup = new Dictionary<string, Prefab>();
 }

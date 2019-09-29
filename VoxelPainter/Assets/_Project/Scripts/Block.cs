@@ -24,8 +24,6 @@ public class Block : MonoBehaviour
 
     public void Save()
     {
-        mBlockData = new BlockData();
-
         var facesData = new FaceData[faces.Length];
         for (int i = 0; i < faces.Length; i++)
         {
@@ -44,17 +42,22 @@ public class Block : MonoBehaviour
     }
 
     [System.Serializable]
-    public class BlockData
+    public struct BlockData
     {
         public Vector3 position;
         public Vector3 scale;
         public Quaternion rotation;
 
         public FaceData[] FacesData;
+
+        public PrefabData PrefabData;
     }
 
+    // Block data that comes in here is wrong.
     public void Load(BlockData data)
     {
+        mBlockData = new BlockData();
+
         Dictionary<EFaceType, FaceData> faceMap = new Dictionary<EFaceType, FaceData>();
 
         foreach (var f in data.FacesData)
@@ -67,5 +70,16 @@ public class Block : MonoBehaviour
             var fData = faceMap[f.FaceType];
             f.SetColor(fData.Color);
         }
+
+        mBlockData = data;
     }
+}
+
+
+[System.Serializable]
+public struct PrefabData
+{
+    public string Id;
+    public string GuidInstance;
+    public Vector3 SelectedPosition;
 }

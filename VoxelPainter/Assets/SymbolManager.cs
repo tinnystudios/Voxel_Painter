@@ -166,8 +166,9 @@ public class SymbolManager : Singleton<SymbolManager>
         prefabInstance.Setup(id, blocks, selectedFace.transform.position);
 
         foreach (var b in blocks)
+        {
             b.transform.SetParent(pivot.transform);
-
+        }
         return pivot.transform;
     }
 

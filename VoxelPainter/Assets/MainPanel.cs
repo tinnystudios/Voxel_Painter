@@ -19,7 +19,7 @@ public class MainPanel : MonoBehaviour, IPointerClickHandler
 
     void OnDestroy()
     {
-        OnPanelSelected += OnPanelChanged;
+        OnPanelSelected -= OnPanelChanged;
     }
 
     private void OnPanelChanged(MainPanel obj)
