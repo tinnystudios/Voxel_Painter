@@ -37,11 +37,20 @@ public class Prefab : MonoBehaviour
         block.transform.SetParent(transform);
     }
 
-    public void UpdateChanges()
+    public void UpdateChanges(bool destroy = false)
     {
-        foreach (var child in Children)
-            child?.gameObject?.SetActive(false);
-
+        try
+        {
+            foreach (var child in Children)
+            {
+                child?.gameObject?.SetActive(false);
+                if (child != null && destroy)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+        catch { }
         Children.Clear();
 
         SymbolManager.Instance.Load(this, Id);

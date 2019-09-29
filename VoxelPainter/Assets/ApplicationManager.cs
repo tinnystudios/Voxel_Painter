@@ -243,6 +243,14 @@ public class ApplicationManager : Singleton<ApplicationManager>
             Destroy(block.gameObject);
         }
 
+        /*
+        var symbols = FindObjectsOfType<Prefab>();
+        foreach (var s in symbols)
+        {
+            Destroy(s.gameObject);
+        }
+        */
+
         var data = File.ReadAllText(SaveDataPath);
         var jsonData = JsonUtility.FromJson<AppData>(data);
 
@@ -256,10 +264,12 @@ public class ApplicationManager : Singleton<ApplicationManager>
             CreatePrefabForBlock(instance);
         }
 
+
+
         // Go through everything prefab and see if they need updating?
         foreach (var prefab in _prefabLookup.ToList().Select(x => x.Value))
         {
-            prefab.UpdateChanges();
+            prefab.UpdateChanges(destroy: true);
         }
     }
 

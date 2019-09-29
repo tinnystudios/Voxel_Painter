@@ -28,7 +28,7 @@ public class PrefabContextMenu : MonoBehaviour
 
     public void SetState(bool state)
     {
-        Group.SetActive(state);
+        Group?.SetActive(state);
     }
 
     private void Update()
