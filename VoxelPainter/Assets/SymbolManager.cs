@@ -100,6 +100,12 @@ public class SymbolManager : Singleton<SymbolManager>
 
     public void Load(Prefab prefab, string id)
     {
+        if (prefab == null)
+        {
+            Debug.LogWarning("Prefab is null");
+            return;
+        }
+
         var transforms = GenerateBlocks(id);
         var lowestBlock = Lowest(transforms.Select(x => x.transform).ToList());
         var lowestFace = LowestFace(lowestBlock);
