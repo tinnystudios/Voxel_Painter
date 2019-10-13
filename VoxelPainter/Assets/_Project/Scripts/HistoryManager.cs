@@ -1,7 +1,5 @@
 ﻿using core;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class HistoryManager : Singleton<HistoryManager> {
     public System.Action OnHistoryChanged;
@@ -16,6 +14,15 @@ public class HistoryManager : Singleton<HistoryManager> {
 
     public List<HistoryActionContainer> undoList;
     public List<HistoryActionContainer> redoList;
+
+    public HistoryInterface Interface;
+
+    public void Clear()
+    {
+        undoList.Clear();
+        redoList.Clear();
+        Interface.Clear();
+    }
 
     public void AddAction(Action action) {
         HistoryActionContainer actionContainer = new HistoryActionContainer(action);

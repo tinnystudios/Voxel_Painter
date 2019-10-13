@@ -19,6 +19,15 @@ public class HistoryInterface : MonoBehaviour
         historyManager.OnClearRedo += HistoryManager_OnClearRedo;
     }
 
+    public void Clear()
+    {
+        var historyButtons = FindObjectsOfType<HistoryButton>();
+        foreach (var b in historyButtons)
+            Destroy(b.gameObject);
+
+        undoLookUp.Clear();
+    }
+
     //OnAdd
     private void OnAdd(HistoryActionContainer actionContainer)
     {

@@ -37,6 +37,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
     public List<AppData> Presets;
     private Dictionary<string, AppData> _presetLookUp = new Dictionary<string, AppData>();
 
+    private string LoadedDataPath = null;
+
     private void Awake()
     {
         var rootPath = Application.isEditor ? Application.dataPath : Application.persistentDataPath;
@@ -222,22 +224,35 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void Save()
     {
+        if (string.IsNullOrEmpty(LoadedDataPath))
+            SaveAs();
+        else
+            DoSave(LoadedDataPath);
+    }
+
+    public void SaveAs()
+    {
         FileBrowser.SetFilters(false, new Filter("Json", ".json"));
         FileBrowser.ShowSaveDialog((path) => 
         {
-            m_AppData.m_Blocks.Clear();
-            var blocks = FindObjectsOfType<Block>();
-
-            foreach (var block in blocks)
-            {
-                block.Save();
-                m_AppData.m_Blocks.Add(block.mBlockData);
-            }
-
-            var json = JsonUtility.ToJson(m_AppData, true);
-            File.WriteAllText(path, json);
+            DoSave(path);
         }, 
         () => { });
+    }
+
+    public void DoSave(string path)
+    {
+        m_AppData.m_Blocks.Clear();
+        var blocks = FindObjectsOfType<Block>();
+
+        foreach (var block in blocks)
+        {
+            block.Save();
+            m_AppData.m_Blocks.Add(block.mBlockData);
+        }
+
+        var json = JsonUtility.ToJson(m_AppData, true);
+        File.WriteAllText(path, json);
     }
 
     public void Load()
@@ -245,6 +260,9 @@ public class ApplicationManager : Singleton<ApplicationManager>
         FileBrowser.SetFilters(false, new Filter("Json", ".json"));
         FileBrowser.ShowLoadDialog((path) => 
         {
+            HistoryManager.Instance.Clear();
+            SelectionManager.Instance.Clear(addAction: false);
+
             var prefabs = FindObjectsOfType<Prefab>();
             foreach (var p in prefabs)
                 Destroy(p.gameObject);
@@ -271,6 +289,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
             {
                 prefab.UpdateChanges(destroy: true);
             }
+
+            LoadedDataPath = path;
         }, 
         () => 
         {
