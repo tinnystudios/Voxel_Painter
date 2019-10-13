@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleFileBrowser;
+using static SimpleFileBrowser.FileBrowser;
 
 [System.Serializable]
 public class AppData
@@ -221,6 +222,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void Save()
     {
+        FileBrowser.SetFilters(false, new Filter("Json", ".json"));
         FileBrowser.ShowSaveDialog((path) => 
         {
             m_AppData.m_Blocks.Clear();
@@ -240,14 +242,16 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void Load()
     {
+        FileBrowser.SetFilters(false, new Filter("Json", ".json"));
         FileBrowser.ShowLoadDialog((path) => 
         {
-            var blocks = FindObjectsOfType<Block>();
+            var prefabs = FindObjectsOfType<Prefab>();
+            foreach (var p in prefabs)
+                Destroy(p.gameObject);
 
+            var blocks = FindObjectsOfType<Block>();
             foreach (var block in blocks)
-            {
                 Destroy(block.gameObject);
-            }
 
             var data = File.ReadAllText(path);
             var jsonData = JsonUtility.FromJson<AppData>(data);
