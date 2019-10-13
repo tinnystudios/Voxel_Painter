@@ -6,8 +6,10 @@ public class MyCamera : MonoBehaviour {
     public float verticalSpeed = 10f;
     public Vector3 target;
     public Transform targetTransform;
+
     public float focalRange = 25;
-    
+    public float ScrollForce = 1;
+
     // Use this for initialization
     void Start () {
         Cursor.lockState = CursorLockMode.Locked;
@@ -32,7 +34,7 @@ public class MyCamera : MonoBehaviour {
         target = targetTransform.position;
 
         float scrollValue = Input.GetAxis("Mouse ScrollWheel");
-        Vector3 newPos = transform.position + (transform.forward * scrollValue * 5000 * Time.deltaTime);
+        Vector3 newPos = transform.position + (transform.forward * scrollValue * 5000 * Time.deltaTime * ScrollForce);
         transform.position = Vector3.Lerp(transform.position, newPos, 20 * Time.deltaTime);
 
         float h = horizontalSpeed * Input.GetAxis("Mouse X");
@@ -66,10 +68,8 @@ public class MyCamera : MonoBehaviour {
             target = transform.position + (transform.forward * focalRange);
         }
 
-
         if (Input.GetKeyDown(KeyCode.F))
             Focus(target);
-
     }
 }
 

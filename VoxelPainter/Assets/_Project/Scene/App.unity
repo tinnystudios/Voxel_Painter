@@ -1077,7 +1077,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save
+  m_Text: Save As
 --- !u!222 &190655975
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3643,6 +3643,7 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   targetTransform: {fileID: 552060458}
   focalRange: 25
+  ScrollForce: 1
 --- !u!114 &574360795
 MonoBehaviour:
   m_ObjectHideFlags: 0

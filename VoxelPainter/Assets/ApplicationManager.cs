@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SimpleFileBrowser;
 
 [System.Serializable]
 public class AppData
@@ -220,57 +221,59 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void Save()
     {
-        m_AppData.m_Blocks.Clear();
-        var blocks = FindObjectsOfType<Block>();
-
-        foreach (var block in blocks)
+        FileBrowser.ShowSaveDialog((path) => 
         {
-            block.Save();
-            m_AppData.m_Blocks.Add(block.mBlockData);
-        }
+            m_AppData.m_Blocks.Clear();
+            var blocks = FindObjectsOfType<Block>();
 
-        var json = JsonUtility.ToJson(m_AppData, true);
+            foreach (var block in blocks)
+            {
+                block.Save();
+                m_AppData.m_Blocks.Add(block.mBlockData);
+            }
 
-        File.WriteAllText(SaveDataPath, json);
+            var json = JsonUtility.ToJson(m_AppData, true);
+            File.WriteAllText(path, json);
+        }, 
+        () => { });
     }
 
     public void Load()
     {
-        var blocks = FindObjectsOfType<Block>();
-
-        foreach (var block in blocks)
+        FileBrowser.ShowLoadDialog((path) => 
         {
-            Destroy(block.gameObject);
-        }
+            var blocks = FindObjectsOfType<Block>();
 
-        /*
-        var symbols = FindObjectsOfType<Prefab>();
-        foreach (var s in symbols)
+            foreach (var block in blocks)
+            {
+                Destroy(block.gameObject);
+            }
+
+            var data = File.ReadAllText(path);
+            var jsonData = JsonUtility.FromJson<AppData>(data);
+
+            foreach (var block in jsonData.m_Blocks)
+            {
+                var instance = Instantiate(blockPrefab);
+                instance.gameObject.transform.position = block.position;
+                instance.gameObject.transform.localScale = block.scale;
+                instance.Load(block);
+
+                CreatePrefabForBlock(instance);
+            }
+
+            // Go through everything prefab and see if they need updating?
+            foreach (var prefab in _prefabLookup.ToList().Select(x => x.Value))
+            {
+                prefab.UpdateChanges(destroy: true);
+            }
+        }, 
+        () => 
         {
-            Destroy(s.gameObject);
-        }
-        */
 
-        var data = File.ReadAllText(SaveDataPath);
-        var jsonData = JsonUtility.FromJson<AppData>(data);
+        });
 
-        foreach (var block in jsonData.m_Blocks)
-        {
-            var instance = Instantiate(blockPrefab);
-            instance.gameObject.transform.position = block.position;
-            instance.gameObject.transform.localScale = block.scale;
-            instance.Load(block);
-
-            CreatePrefabForBlock(instance);
-        }
-
-
-
-        // Go through everything prefab and see if they need updating?
-        foreach (var prefab in _prefabLookup.ToList().Select(x => x.Value))
-        {
-            prefab.UpdateChanges(destroy: true);
-        }
+        return;
     }
 
     public Block CreateBlock(Block.BlockData data)
