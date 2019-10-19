@@ -352,6 +352,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         IEnumerator Routine()
         {
+            LoadedDataPath = null;
             yield return SceneManager.LoadSceneAsync(0);
             GridGenerator.Generate();
             ReloadSymbols();
