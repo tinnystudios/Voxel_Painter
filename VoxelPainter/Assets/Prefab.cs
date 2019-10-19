@@ -33,6 +33,12 @@ public class Prefab : MonoBehaviour
 
     public void Add(Block block)
     {
+        if (block == null)
+            return;
+
+        if (transform == null)
+            return;
+
         Children.Add(block);
         block.transform.SetParent(transform);
     }

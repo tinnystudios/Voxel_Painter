@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +21,7 @@ public class AppData
 public class ApplicationManager : Singleton<ApplicationManager>
 {
     public AppData m_AppData;
-
+    public GridGenerator GridGenerator;
     public Camera ScreenshotCamera;
     public RenderTexture ScreenshotRenderTexture;
 
@@ -39,8 +38,22 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     private string LoadedDataPath = null;
 
+    public string SceneName
+    {
+        get
+        {
+            return !string.IsNullOrEmpty(LoadedDataPath) ? Path.GetFileNameWithoutExtension(LoadedDataPath) : "Empty";
+        }
+    }
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         var rootPath = Application.isEditor ? Application.dataPath : Application.persistentDataPath;
         SaveDataPath = rootPath + SaveDataPath;
         SymbolPath = rootPath + SymbolPath;
@@ -49,10 +62,33 @@ public class ApplicationManager : Singleton<ApplicationManager>
         Directory.CreateDirectory(SymbolPath);
 
         SaveDataPath += SaveDataFileName;
-
         LoadPresets();
 
-        Debug.Log(SaveDataPath);
+        _Instance = this;
+        transform.parent = null;
+        DontDestroyOnLoad(gameObject);
+        GridGenerator.Generate();
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
+        {
+            if (FileBrowser.IsOpen)
+            {
+                var fileBrowser = FindObjectOfType<FileBrowser>();
+                fileBrowser.OnSubmitButtonClicked();
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (FileBrowser.IsOpen)
+            {
+                var fileBrowser = FindObjectOfType<FileBrowser>();
+                fileBrowser.OnCancelButtonClicked();
+            }
+        }
     }
 
     public void SaveSymbol(List<Block> blocks, string id = null)
@@ -253,6 +289,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
         var json = JsonUtility.ToJson(m_AppData, true);
         File.WriteAllText(path, json);
+
+        LoadedDataPath = path;
     }
 
     public void Load()
@@ -260,20 +298,24 @@ public class ApplicationManager : Singleton<ApplicationManager>
         FileBrowser.SetFilters(false, new Filter("Json", ".json"));
         FileBrowser.ShowLoadDialog((path) => 
         {
-            HistoryManager.Instance.Clear();
-            SelectionManager.Instance.Clear(addAction: false);
+            StartCoroutine(LoadScene(path));
+        }, 
+        () => 
+        {
 
-            var prefabs = FindObjectsOfType<Prefab>();
-            foreach (var p in prefabs)
-                Destroy(p.gameObject);
+        });
 
-            var blocks = FindObjectsOfType<Block>();
-            foreach (var block in blocks)
-                Destroy(block.gameObject);
+        return;
+
+        IEnumerator LoadScene(string path)
+        {
+            _prefabLookup.Clear();
+
+            yield return SceneManager.LoadSceneAsync(0);
 
             var data = File.ReadAllText(path);
             var jsonData = JsonUtility.FromJson<AppData>(data);
-
+            Debug.Log("Loading... " + path);
             foreach (var block in jsonData.m_Blocks)
             {
                 var instance = Instantiate(blockPrefab);
@@ -291,13 +333,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
             }
 
             LoadedDataPath = path;
-        }, 
-        () => 
-        {
-
-        });
-
-        return;
+            ReloadSymbols();
+        }
     }
 
     public Block CreateBlock(Block.BlockData data)
@@ -311,7 +348,14 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void New()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(Routine());
+
+        IEnumerator Routine()
+        {
+            yield return SceneManager.LoadSceneAsync(0);
+            GridGenerator.Generate();
+            ReloadSymbols();
+        }
     }
 
     public void CreatePrefabForBlock(Block block)
@@ -336,4 +380,6 @@ public class ApplicationManager : Singleton<ApplicationManager>
     }
 
     private Dictionary<string, Prefab> _prefabLookup = new Dictionary<string, Prefab>();
+
+    public Action<string> OnSceneChanged;
 }

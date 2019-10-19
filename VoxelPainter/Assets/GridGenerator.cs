@@ -9,8 +9,7 @@ public class GridGenerator : MonoBehaviour
 	public float row = 20;
 	public float col = 20;
 
-	// Use this for initialization
-	void Start ()
+	public void Generate()
 	{
 		for (int y = 0; y < col; y++) {
 			for (int x = 0; x < row; x++) {
