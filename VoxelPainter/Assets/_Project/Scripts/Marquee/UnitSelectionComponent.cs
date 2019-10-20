@@ -9,6 +9,7 @@ using core;
 
 public class UnitSelectionComponent : MonoBehaviour, IAction
 {
+    public GameObject Root;
     bool isSelecting = false;
     Vector3 mousePosition1;
     bool canUse = false;
@@ -74,6 +75,7 @@ public class UnitSelectionComponent : MonoBehaviour, IAction
         if( Input.GetMouseButtonUp( 0 ) )
         {
             var iSelectables = InterfaceHelper.FindObjects<ISelectable>();
+            //var iSelectables = Root.GetComponentsInChildren<ISelectable>();
             var selectedObjects = new List<ISelectable>();
             
             foreach( var selectableObject in iSelectables)
@@ -82,30 +84,16 @@ public class UnitSelectionComponent : MonoBehaviour, IAction
                 {
                     if (IsWithinSelectionBounds(selectableObject.gameObject))
                     {
-                        /*
-                        if (Input.GetKey(KeyCode.LeftControl))
-                        {
-                            Block block = selectableObject.gameObject.transform.parent.GetComponent<Block>();
-
-                            foreach (Face face in block.faces)
-                            {
-                                if (face.gameObject != selectableObject.gameObject)
-                                {
-                                    SelectionManager.Instance.Select(face);
-                                    selectedObjects.Add(face);
-                                }
-                            }
-                        }
-                        */
-
                         if (!SelectionManager.Instance.hashSelectable.Contains(selectableObject))
                         {
-                            SelectionManager.Instance.Select(selectableObject);
+                            SelectionManager.Instance.Select(selectableObject, checkPivot: false);
                             selectedObjects.Add(selectableObject);
                         }
                     }
                 }
             }
+
+            SelectionManager.Instance.CheckPivot();
 
             if (selectedObjects.Count > 0)
             {

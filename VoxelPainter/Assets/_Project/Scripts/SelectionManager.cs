@@ -153,7 +153,7 @@ public class SelectionManager : Singleton<SelectionManager>
             Select(face);
     }
 
-    public void Select(ISelectable iSelectable) {
+    public void Select(ISelectable iSelectable, bool checkPivot = true) {
         if (hashSelectable.Contains(iSelectable))
             return;
 
@@ -177,7 +177,9 @@ public class SelectionManager : Singleton<SelectionManager>
         hashSelectable.Add(iSelectable);
         iSelectable.Select();
         AddBlock(iSelectable);
-        CheckPivot();
+
+        if(checkPivot)
+            CheckPivot();
     }
 
     /*
