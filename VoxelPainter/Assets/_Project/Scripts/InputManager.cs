@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputManager : Singleton<InputManager> {
 
@@ -9,7 +7,15 @@ public class InputManager : Singleton<InputManager> {
 
     public InputConfig Config;
 
-    void Update() {
+    public MyCamera GodMovement;
+    public FPSMovement FPSMovement;
+
+    public bool UseFPSMovement;
+
+    void Update()
+    {
+        GodMovement.enabled = !UseFPSMovement;
+        FPSMovement.enabled = UseFPSMovement;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -27,6 +33,17 @@ public class InputManager : Singleton<InputManager> {
         if (Input.GetKeyUp(KeyCode.C))
             ColorManager.Instance.ToggleColorInfoMenu();
     }
+    
+    public void SetMode(BaseMovement movement)
+    {
+        UseFPSMovement = movement is FPSMovement;
+    }
+}
+
+public enum EControlMode
+{
+    GodMode,
+    Flythrough,
 }
 
 public static class ActionExtensions

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainPanel : MonoBehaviour, IPointerClickHandler
 {
@@ -15,6 +16,12 @@ public class MainPanel : MonoBehaviour, IPointerClickHandler
     {
         m_SubPanel.gameObject.SetActive(mOpened);
         OnPanelSelected += OnPanelChanged;
+
+        var buttons = GetComponentsInChildren<Button>(includeInactive: true);
+        foreach (var button in buttons)
+        {
+            button.onClick.AddListener(() => { Close(); });
+        }
     }
 
     void OnDestroy()
@@ -26,9 +33,14 @@ public class MainPanel : MonoBehaviour, IPointerClickHandler
     {
         if (obj != this)
         {
-            mOpened = false;
-            m_SubPanel.gameObject.SetActive(mOpened);
+            Close();
         }
+    }
+
+    public void Close()
+    {
+        mOpened = false;
+        m_SubPanel.gameObject.SetActive(mOpened);
     }
 
     public void OnPointerClick(PointerEventData eventData)

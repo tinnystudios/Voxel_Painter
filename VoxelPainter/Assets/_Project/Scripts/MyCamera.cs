@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class MyCamera : MonoBehaviour {
-
+public class MyCamera : BaseMovement
+{
     public float horizontalSpeed = 10f; // looks like "10" maps to the native speed
     public float verticalSpeed = 10f;
     public Vector3 target;
@@ -33,6 +33,8 @@ public class MyCamera : MonoBehaviour {
     {
         target = targetTransform.position;
 
+        var dist = Vector3.Distance(target, transform.position);
+
         float scrollValue = Input.GetAxis("Mouse ScrollWheel");
         Vector3 newPos = transform.position + (transform.forward * scrollValue * 5000 * Time.deltaTime * ScrollForce);
         transform.position = Vector3.Lerp(transform.position, newPos, 20 * Time.deltaTime);
@@ -41,6 +43,11 @@ public class MyCamera : MonoBehaviour {
         float v = verticalSpeed * Input.GetAxis("Mouse Y");
 
         Vector3 delta = new Vector3(h, v, 0);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            target = transform.position + transform.forward * 5;
+        }
 
         if (Input.GetKey(KeyCode.LeftAlt) && Input.GetMouseButton(0))
         {
