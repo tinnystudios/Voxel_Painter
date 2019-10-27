@@ -34,6 +34,16 @@ public class MyCamera : BaseMovement
         target = targetTransform.position;
 
         var dist = Vector3.Distance(target, transform.position);
+        var normDist = dist / 10;
+
+        ScrollForce = normDist;
+        if (ScrollForce <= 0)
+            ScrollForce = 0.001F;
+
+        focalRange = SelectionManager.Instance.MaxPosition;
+
+        if (focalRange <= 0)
+            focalRange = 1;
 
         float scrollValue = Input.GetAxis("Mouse ScrollWheel");
         Vector3 newPos = transform.position + (transform.forward * scrollValue * 5000 * Time.deltaTime * ScrollForce);
@@ -70,8 +80,8 @@ public class MyCamera : BaseMovement
 
         if (Input.GetMouseButton(2) || Input.GetKey(panKey) || Input.GetKey(KeyCode.Space))
         {
-            transform.localPosition += -transform.up * delta.y * Time.deltaTime;
-            transform.localPosition += -transform.right * delta.x * Time.deltaTime;
+            transform.localPosition += -transform.up * delta.y * normDist * Time.deltaTime;
+            transform.localPosition += -transform.right * delta.x * normDist * Time.deltaTime;
             target = transform.position + (transform.forward * focalRange);
         }
 

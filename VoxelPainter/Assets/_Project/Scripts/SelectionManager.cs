@@ -292,7 +292,7 @@ public class SelectionManager : Singleton<SelectionManager>
             if (pos.z < minPosition.z) minPosition.z = pos.z;
             if (pos.z > maxPosition.z) maxPosition.z = pos.z;
         }
-        
+        Debug.Log("Check pivot");
         Vector3 dir = maxPosition - minPosition;
         float dist = Vector3.Distance(maxPosition, minPosition);
         dir.Normalize();
@@ -300,11 +300,12 @@ public class SelectionManager : Singleton<SelectionManager>
         pivot.position = pivotPosition;
 
         foreach (Block b in blocks)
-        {
             b.transform.SetParent(pivot);
-        }
 
+        MaxPosition = selectedGameObjects.Count == 1 ? selectedGameObjects[0].transform.lossyScale.x + 1 : dist;
     }
+
+    public float MaxPosition = 1;
 
     public void AssignBlocksInGroup() {
 
