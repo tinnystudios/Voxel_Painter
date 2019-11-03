@@ -9,6 +9,7 @@ public class InputManager : Singleton<InputManager> {
 
     public MyCamera GodMovement;
     public FPSMovement FPSMovement;
+    public PlatformerMovement PlatformerMovement;
 
     public bool UseFPSMovement;
 
@@ -36,7 +37,13 @@ public class InputManager : Singleton<InputManager> {
     
     public void SetMode(BaseMovement movement)
     {
-        UseFPSMovement = movement is FPSMovement;
+        UseFPSMovement = movement is FPSMovement || movement is PlatformerMovement;
+        movement.enabled = true;
+
+        if (!(movement is PlatformerMovement)) 
+        {
+            PlatformerMovement.enabled = false;
+        }
     }
 }
 
