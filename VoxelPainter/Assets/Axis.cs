@@ -59,6 +59,11 @@ public class Axis : MonoBehaviour, IPointerDownHandler
                     break;
             }
 
+            var gridSize = SnapManager.Instance.Settings.GridSize;
+            disp.y = Mathf.RoundToInt(disp.y) * gridSize;
+            disp.x = Mathf.RoundToInt(disp.x) * gridSize;
+            disp.z = Mathf.RoundToInt(disp.z) * gridSize;
+
             Axes.transform.position = _axesFirstPos + disp;
 
             Axes.OnMove();
