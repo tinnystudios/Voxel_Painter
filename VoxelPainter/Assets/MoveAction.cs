@@ -10,6 +10,8 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
     public Action Action;
     public Axes Axes;
 
+    public bool IsActive { get; private set; }
+
     public KeyCode Key
     {
         get
@@ -53,6 +55,8 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
 
             AddUndo(delta);
         }
+
+        IsActive = false;
     }
 
     private void AddUndo(Vector3 delta)

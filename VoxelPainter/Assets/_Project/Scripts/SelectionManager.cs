@@ -264,6 +264,17 @@ public class SelectionManager : Singleton<SelectionManager>
         blocks.Clear();
     }
 
+    public void SetPivotPosition(Vector3 position)
+    {
+        foreach (Block b in blocks)
+            b.transform.SetParent(null);
+
+        pivot.position = position;
+
+        foreach (Block b in blocks)
+            b.transform.SetParent(pivot);
+    }
+
     public void CheckPivot() {
 
         foreach (Block b in blocks) {

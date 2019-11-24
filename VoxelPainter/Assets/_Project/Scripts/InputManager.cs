@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InputManager : Singleton<InputManager> {
 
@@ -12,6 +13,9 @@ public class InputManager : Singleton<InputManager> {
     public PlatformerMovement PlatformerMovement;
 
     public bool UseFPSMovement;
+
+    public Action OnInputVertexSnap;
+    public Action OnInputVertexSnapUp;
 
     void Update()
     {
@@ -33,6 +37,12 @@ public class InputManager : Singleton<InputManager> {
 
         if (Input.GetKeyUp(KeyCode.C))
             ColorManager.Instance.ToggleColorInfoMenu();
+
+        if (Input.GetKey(KeyCode.V))
+            OnInputVertexSnap?.Invoke();
+
+        if (Input.GetKeyUp(KeyCode.V))
+            OnInputVertexSnapUp?.Invoke();
     }
     
     public void SetMode(BaseMovement movement)
