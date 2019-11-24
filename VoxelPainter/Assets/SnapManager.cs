@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using App;
 
 public class SnapManager : Singleton<SnapManager>
@@ -12,6 +11,13 @@ public class SnapManager : Singleton<SnapManager>
     private void Awake()
     {
         InputManager.Instance.OnInputVertexSnap += OnInputVertexSnap;
+        InputManager.Instance.OnInputVertexSnapUp += OnInputVertexSnapUp;
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.Instance.OnInputVertexSnap -= OnInputVertexSnap;
+        InputManager.Instance.OnInputVertexSnapUp -= OnInputVertexSnapUp;
     }
 
     public RaycastHit GetMouseHit()
@@ -23,6 +29,7 @@ public class SnapManager : Singleton<SnapManager>
 
     private void OnInputVertexSnap()
     {
+        VertexCursor.gameObject.SetActive(true);
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out var hit,1000, Mask))
@@ -34,7 +41,7 @@ public class SnapManager : Singleton<SnapManager>
             if (!Input.GetMouseButton(0))
             {
                 SelectionManager.Instance.SetPivotPosition(VertexCursor.position);
-                MoveAction.SetAxisToPivot();
+                MoveAction.MoveToPivot();
             }
 
             var pivot = SelectionManager.Instance.pivot;
@@ -42,9 +49,20 @@ public class SnapManager : Singleton<SnapManager>
             if (pivot.position != VertexCursor.position)
             {
                 pivot.position = VertexCursor.position;
-                MoveAction.SetAxisToPivot();
+                MoveAction.MoveToPivot();
             }
         }
+    }
+
+    private void OnInputVertexSnapUp()
+    {
+        VertexCursor.gameObject.SetActive(false);
+
+        SelectionManager.Instance.CheckPivot();
+
+        MoveAction.OnAxesFinished();
+        MoveAction.UpdateLastPivotPosition();
+        MoveAction.MoveToPivot();
     }
 
     public void SetSnapSize(string sizeString)
@@ -54,7 +72,7 @@ public class SnapManager : Singleton<SnapManager>
 
     public void SetSnapSize(float size)
     {
-        Settings.GridSize = size;
+        Settings.UnitSize = size;
     }
 
     public void SnapType(ESnapType type)
@@ -65,13 +83,14 @@ public class SnapManager : Singleton<SnapManager>
 
 public class SnapSettings
 {
-    public ESnapType Type = ESnapType.Grid;
-    public float GridSize = 1.0F;
+    public ESnapType Type = ESnapType.Unit;
+    public float UnitSize = 1.0F;
 }
 
 public enum ESnapType
 {
     None,
     Grid,
+    Unit,
     Point
 }

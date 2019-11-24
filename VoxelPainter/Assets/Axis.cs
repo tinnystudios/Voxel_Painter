@@ -60,20 +60,15 @@ public class Axis : MonoBehaviour, IPointerDownHandler
             }
 
             var snapSettings = SnapManager.Instance.Settings;
-            if (snapSettings.Type == ESnapType.Grid)
+            if (snapSettings.Type == ESnapType.Unit)
             {
-                var gridSize = snapSettings.GridSize;
+                var gridSize = snapSettings.UnitSize;
                 disp.y = Mathf.RoundToInt(disp.y) * gridSize;
                 disp.x = Mathf.RoundToInt(disp.x) * gridSize;
                 disp.z = Mathf.RoundToInt(disp.z) * gridSize;
             }
 
             Axes.transform.position = _axesFirstPos + disp;
-
-            if (Input.GetKey(KeyCode.V))
-            {
-                // Axes.transform.position = SnapManager.Instance.VertexCursor.position;
-            }
 
             Axes.OnMove();
         }

@@ -41,11 +41,22 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
         pivot.transform.position = Axes.transform.position;
     }
 
-    // Moved!
-    private void OnAxesFinished()
+    public void MoveToPivot()
     {
         var pivot = SelectionManager.Instance.pivot;
+        Axes.gameObject.transform.position = pivot.position;
+    }
 
+    public void UpdateLastPivotPosition()
+    {
+        var pivot = SelectionManager.Instance.pivot;
+        _pivotLastPosition = pivot.transform.position;
+    }
+
+    // Moved!
+    public void OnAxesFinished()
+    {
+        var pivot = SelectionManager.Instance.pivot;
         var delta = pivot.transform.position - _pivotLastPosition;
 
         if (_pivotLastPosition != pivot.transform.position)
@@ -85,7 +96,6 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
         Axes.gameObject.SetActive(false);
     }
 
- 
     public void Select()
     {
         if (SelectionManager.Instance.selectedGameObjects.Count == 0)
@@ -95,8 +105,7 @@ public class MoveAction : MonoBehaviour, IAction, IShortKey
         SetAxisToPivot();
     }
 
-    [ContextMenu("Set to pivot")]
-    public void SetAxisToPivot()
+    public void SetAxisToPivot(bool cacheLastPosition = true)
     {
         var pivot = SelectionManager.Instance.pivot;
         Axes.gameObject.transform.position = pivot.position;
