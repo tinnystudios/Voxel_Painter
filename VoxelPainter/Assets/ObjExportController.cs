@@ -17,6 +17,6 @@ public class ObjExportController : MonoBehaviour
         }
 
         MeshFilter meshFilter = TargetObject.GetComponent<MeshFilter>();
-        ObjExporter.MeshToFile(meshFilter, path);
+        //ObjExporter.MeshToFile(meshFilter, path);
     }
 }

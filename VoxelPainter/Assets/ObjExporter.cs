@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-public class ObjExporter
+public class ObjExporter3
 {
     public static string MeshToString(MeshFilter mf)
     {
