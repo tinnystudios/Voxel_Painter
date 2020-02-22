@@ -35,6 +35,7 @@ public class ObjExporterScript
         {
             return "####Error####";
         }
+
         Material[] mats = mf.GetComponent<Renderer>().sharedMaterials;
 
         StringBuilder sb = new StringBuilder();
@@ -116,40 +117,29 @@ public class ObjExporterScript
         [MenuItem("File/Export/Wavefront OBJ")]
         static void DoExportWSubmeshes()
         {
-            DoExport(true);
+            //DoExport(true);
         }
 
         [MenuItem("File/Export/Wavefront OBJ (No Submeshes)")]
         static void DoExportWOSubmeshes()
         {
-            DoExport(false);
+            //DoExport(false);
         }
-
-        static void DoExport(bool makeSubmeshes)
+#endif
+        public static void DoExport(bool makeSubmeshes, Transform t, string name, string path)
         {
             MtlContent = "";
             MaterialLookUp.Clear();
-
-            if (Selection.gameObjects.Length == 0)
-            {
-                Debug.Log("Didn't Export Any Meshes; Nothing was selected!");
-                return;
-            }
-
-            string meshName = Selection.gameObjects[0].name;
-            string fileName = EditorUtility.SaveFilePanel("Export .obj file", "", meshName, "obj");
 
             ObjExporterScript.Start();
 
             StringBuilder meshString = new StringBuilder();
 
-            meshString.Append("#" + meshName + ".obj"
+            meshString.Append("#" + name + ".obj"
             + "\n#" + System.DateTime.Now.ToLongDateString()
             + "\n#" + System.DateTime.Now.ToLongTimeString()
             + "\n#-------"
             + "\n\n");
-
-            Transform t = Selection.gameObjects[0].transform;
 
             Vector3 originalPosition = t.position;
             t.position = Vector3.zero;
@@ -160,15 +150,13 @@ public class ObjExporterScript
             }
             meshString.Append(processTransform(t, makeSubmeshes));
 
-            WriteToFile(meshString.ToString(), fileName);
+            WriteToFile(meshString.ToString(), path);
 
             t.position = originalPosition;
 
             ObjExporterScript.End();
-            Debug.Log("Exported Mesh: " + fileName);
+            Debug.Log("Exported Mesh: " + path);
         }
-
-#endif
 
         static string processTransform(Transform t, bool makeSubmeshes)
         {
@@ -184,9 +172,12 @@ public class ObjExporterScript
             }
 
             MeshFilter mf = t.GetComponent<MeshFilter>();
-            if (mf)
+            Renderer renderer = t.GetComponent<Renderer>();
+
+            if (mf && renderer)
             {
-                meshString.Append(ObjExporterScript.MeshToString(mf, t));
+                if(mf.gameObject.layer == 9)
+                    meshString.Append(ObjExporterScript.MeshToString(mf, t));
             }
 
             for (int i = 0; i < t.childCount; i++)

@@ -1,0 +1,170 @@
+#test.obj
+#Saturday, 22 February 2020
+#1:28:35 PM
+#-------
+
+#SelectionPivot
+#-------
+g SelectionPivot
+#PivotModel
+#-------
+g PivotModel
+#Visual
+#-------
+g Visual
+#Visual (1)
+#-------
+g Visual (1)
+#Block(Clone)
+#-------
+g Block(Clone)
+#Back
+#-------
+g Back
+#Back
+#-------
+g Back
+mtllib MtlInformation.mtl
+v -0.5 -0.75 -0.5
+v 0.5 -0.75 -0.5
+v -0.5 0.25 -0.5
+v 0.5 0.25 -0.5
+
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+
+vt 0 0
+vt 1 0
+vt 0 1
+vt 1 1
+
+usemtl Face (Instance)
+f 1/1/1 4/4/4 2/2/2
+f 4/4/4 1/1/1 3/3/3
+#Front
+#-------
+g Front
+#Front
+#-------
+g Front
+mtllib MtlInformation.mtl
+v -0.5000003 -0.75 0.5
+v 0.5000003 -0.75 0.5
+v -0.5000003 0.25 0.5
+v 0.5000003 0.25 0.5
+
+vn 0 0 -1
+vn 0 0 -1
+vn 0 0 -1
+vn 0 0 -1
+
+vt 0 0
+vt 1 0
+vt 0 1
+vt 1 1
+
+usemtl Face (Instance)
+f 5/5/5 8/8/8 6/6/6
+f 8/8/8 5/5/5 7/7/7
+#Top
+#-------
+g Top
+#Top
+#-------
+g Top
+mtllib MtlInformation.mtl
+v -0.5000001 0.2499999 -0.5000005
+v 0.5000001 0.2499999 -0.5000005
+v -0.5000001 0.2500001 0.5000005
+v 0.5000001 0.2500001 0.5000005
+
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+
+vt 0 0
+vt 1 0
+vt 0 1
+vt 1 1
+
+usemtl Face (Instance)
+f 9/9/9 12/12/12 10/10/10
+f 12/12/12 9/9/9 11/11/11
+#Bottom
+#-------
+g Bottom
+#Bottom
+#-------
+g Bottom
+mtllib MtlInformation.mtl
+v -0.5000001 -0.7500001 0.5000007
+v 0.5000001 -0.7500001 0.5000007
+v -0.5000001 -0.7499999 -0.5000002
+v 0.5000001 -0.7499999 -0.5000002
+
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+
+vt 0 0
+vt 1 0
+vt 0 1
+vt 1 1
+
+usemtl Face (Instance)
+f 13/13/13 16/16/16 14/14/14
+f 16/16/16 13/13/13 15/15/15
+#Left
+#-------
+g Left
+#Left
+#-------
+g Left
+mtllib MtlInformation.mtl
+v -0.5000001 -0.7499998 0.5000002
+v -0.4999999 -0.7499998 -0.5
+v -0.5000001 0.2500002 0.5000002
+v -0.4999999 0.2500002 -0.5
+
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+
+vt 0 0
+vt 1 0
+vt 0 1
+vt 1 1
+
+usemtl Face (Instance)
+f 17/17/17 20/20/20 18/18/18
+f 20/20/20 17/17/17 19/19/19
+#Right
+#-------
+g Right
+#Right
+#-------
+g Right
+mtllib MtlInformation.mtl
+v 0.4999999 -0.75 -0.5000002
+v 0.5000001 -0.75 0.5000008
+v 0.4999999 0.25 -0.5000002
+v 0.5000001 0.25 0.5000008
+
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+vn 0 0 1
+
+vt 0 0
+vt 1 0
+vt 0 1
+vt 1 1
+
+usemtl Face (Instance)
+f 21/21/21 24/24/24 22/22/22
+f 24/24/24 21/21/21 23/23/23
