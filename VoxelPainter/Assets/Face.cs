@@ -24,6 +24,7 @@ public class Face : MonoBehaviour, ISelectable
 
     void Awake() {
         materialBlock.Init(gameObject);
+        var mat = GetComponentInChildren<MeshRenderer>().material;
     }
 
     public void Deselect()

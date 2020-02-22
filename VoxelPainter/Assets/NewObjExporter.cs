@@ -44,8 +44,13 @@ public class ObjExporterScript
         string mtlFileName = $"MtlInformation";
         sb.Append("mtllib " + mtlFileName + ".mtl\n");
 
+        var mat = t.GetComponent<MeshRenderer>().material;
+        var color = mat.color;
+        var matName = $"{color.r}{color.g}{color.b}";
+
         // Create a set of materials
-        var color = mats[0].color;
+        Debug.Log(t.name);
+        Debug.Log(mat.color);
 
         // A better way is to just rename it to the color.
         if (!ObjExporterMain.MaterialLookUp.Contains(mats[0].name))
@@ -54,7 +59,7 @@ public class ObjExporterScript
             ObjExporterMain.MtlContent +=
             $@"
 
-            newmtl {mats[0].name}
+            newmtl {matName}
             illum 4
             Kd {color.r} {color.g} {color.b}
             Ka 0.00 0.00 0.00
@@ -64,7 +69,7 @@ public class ObjExporterScript
 
             File.WriteAllText(Application.dataPath + "/_Project/Playground/" + mtlFileName + ".mtl", ObjExporterMain.MtlContent);
 
-            ObjExporterMain.MaterialLookUp.Add(mats[0].name);
+            ObjExporterMain.MaterialLookUp.Add(matName);
         }
 
         foreach (Vector3 vv in m.vertices)
@@ -91,7 +96,7 @@ public class ObjExporterScript
         for (int material = 0; material < m.subMeshCount; material++)
         {
             sb.Append("\n");
-            sb.Append("usemtl ").Append(mats[material].name).Append("\n");
+            sb.Append("usemtl ").Append(matName).Append("\n");
 
             //sb.Append ("usemap ").Append (mats [material].name).Append ("\n");
 
