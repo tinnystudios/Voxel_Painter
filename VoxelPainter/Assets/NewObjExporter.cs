@@ -29,9 +29,6 @@ public class ObjExporterScript
         Vector3 p = t.localPosition;
         Quaternion r = t.localRotation;
 
-
-
-
         int numVertices = 0;
         Mesh m = mf.sharedMesh;
         if (!m)
@@ -44,8 +41,6 @@ public class ObjExporterScript
             t.forward = -t.forward;
         }
 
-        Material[] mats = mf.GetComponent<Renderer>().sharedMaterials;
-
         StringBuilder sb = new StringBuilder();
 
         //Color name
@@ -57,11 +52,9 @@ public class ObjExporterScript
         var matName = $"{color.r}{color.g}{color.b}";
 
         // Create a set of materials
-        Debug.Log(t.name);
-        Debug.Log(mat.color);
 
         // A better way is to just rename it to the color.
-        if (!ObjExporterMain.MaterialLookUp.Contains(mats[0].name))
+        if (!ObjExporterMain.MaterialLookUp.Contains(matName))
         {
             // Creating MTL
             ObjExporterMain.MtlContent +=
@@ -105,8 +98,7 @@ public class ObjExporterScript
         {
             sb.Append("\n");
             sb.Append("usemtl ").Append(matName).Append("\n");
-
-            //sb.Append ("usemap ").Append (mats [material].name).Append ("\n");
+            sb.Append ("usemap ").Append (matName).Append ("\n");
 
             int[] triangles = m.GetTriangles(material);
             for (int i = 0; i < triangles.Length; i += 3)
