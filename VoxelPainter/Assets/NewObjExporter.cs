@@ -29,11 +29,19 @@ public class ObjExporterScript
         Vector3 p = t.localPosition;
         Quaternion r = t.localRotation;
 
+
+
+
         int numVertices = 0;
         Mesh m = mf.sharedMesh;
         if (!m)
         {
             return "####Error####";
+        }
+
+        if (t.name == "Front")
+        {
+            t.forward = -t.forward;
         }
 
         Material[] mats = mf.GetComponent<Renderer>().sharedMaterials;
@@ -109,6 +117,12 @@ public class ObjExporterScript
         }
 
         StartIndex += numVertices;
+
+        if (t.name == "Front")
+        {
+            t.forward = -t.forward;
+        }
+
         return sb.ToString();
     }
 
@@ -118,19 +132,6 @@ public class ObjExporterScript
         public static string MtlContent;
         public static HashSet<string> MaterialLookUp = new HashSet<string>();
 
-#if UNITY_EDITOR
-        [MenuItem("File/Export/Wavefront OBJ")]
-        static void DoExportWSubmeshes()
-        {
-            //DoExport(true);
-        }
-
-        [MenuItem("File/Export/Wavefront OBJ (No Submeshes)")]
-        static void DoExportWOSubmeshes()
-        {
-            //DoExport(false);
-        }
-#endif
         public static void DoExport(bool makeSubmeshes, Transform t, string name, string path)
         {
             MtlContent = "";

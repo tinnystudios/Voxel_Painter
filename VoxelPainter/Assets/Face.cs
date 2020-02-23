@@ -22,9 +22,11 @@ public class Face : MonoBehaviour, ISelectable
         }
     }
 
+    public Material Mat;
+
     void Awake() {
         materialBlock.Init(gameObject);
-        var mat = GetComponentInChildren<MeshRenderer>().material;
+        Mat = GetComponentInChildren<MeshRenderer>().material;
     }
 
     public void Deselect()
@@ -51,6 +53,8 @@ public class Face : MonoBehaviour, ISelectable
     public void SetColor(Color c) {
         color = c;
         materialBlock.SetColor("_Color", color);
+
+        Mat.color = color;
     }
 }
 
