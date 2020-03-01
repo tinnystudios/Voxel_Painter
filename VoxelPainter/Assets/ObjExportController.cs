@@ -9,6 +9,6 @@ public class ObjExportController : MonoBehaviour
     [ContextMenu("Export")]
     public void Export() 
     {
-        ObjExporterMain.DoExport(true, TargetObject.transform, "test", Application.dataPath + "/_Project/Playground/test.obj");
+        ObjExporterMain.DoExport(false, TargetObject.transform, "test", Application.dataPath + "/_Project/Playground/test.obj");
     }
 }

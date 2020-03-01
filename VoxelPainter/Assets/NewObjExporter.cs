@@ -23,7 +23,7 @@ public class ObjExporterScript
     }
 
 
-    public static string MeshToString(MeshFilter mf, Transform t)
+    public static string MeshToString(MeshFilter mf, Transform t, string fileName, string path)
     {
         Vector3 s = t.localScale;
         Vector3 p = t.localPosition;
@@ -44,7 +44,7 @@ public class ObjExporterScript
         StringBuilder sb = new StringBuilder();
 
         //Color name
-        string mtlFileName = $"MtlInformation";
+        string mtlFileName = fileName;
         sb.Append("mtllib " + mtlFileName + ".mtl\n");
 
         var mat = t.GetComponent<MeshRenderer>().material;
@@ -68,7 +68,8 @@ public class ObjExporterScript
             Ni 1.00
             ";
 
-            File.WriteAllText(Application.dataPath + "/_Project/Playground/" + mtlFileName + ".mtl", ObjExporterMain.MtlContent);
+            var directoryPath = Path.GetDirectoryName(path);
+            File.WriteAllText(directoryPath + "/" + mtlFileName + ".mtl", ObjExporterMain.MtlContent);
 
             ObjExporterMain.MaterialLookUp.Add(matName);
         }
@@ -146,7 +147,7 @@ public class ObjExporterScript
             {
                 meshString.Append("g ").Append(t.name).Append("\n");
             }
-            meshString.Append(processTransform(t, makeSubmeshes));
+            meshString.Append(processTransform(t, makeSubmeshes, name, path));
 
             WriteToFile(meshString.ToString(), path);
 
@@ -155,8 +156,8 @@ public class ObjExporterScript
             ObjExporterScript.End();
             Debug.Log("Exported Mesh: " + path);
         }
-
-        static string processTransform(Transform t, bool makeSubmeshes)
+        
+        static string processTransform(Transform t, bool makeSubmeshes, string name, string path)
         {
             StringBuilder meshString = new StringBuilder();
 
@@ -175,12 +176,12 @@ public class ObjExporterScript
             if (mf && renderer)
             {
                 if(mf.gameObject.layer == 9)
-                    meshString.Append(ObjExporterScript.MeshToString(mf, t));
+                    meshString.Append(ObjExporterScript.MeshToString(mf, t, name, path));
             }
 
             for (int i = 0; i < t.childCount; i++)
             {
-                meshString.Append(processTransform(t.GetChild(i), makeSubmeshes));
+                meshString.Append(processTransform(t.GetChild(i), makeSubmeshes, name, path));
             }
 
             return meshString.ToString();

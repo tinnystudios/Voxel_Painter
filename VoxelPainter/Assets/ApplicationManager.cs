@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleFileBrowser;
 using static SimpleFileBrowser.FileBrowser;
+using static ObjExporterScript;
 
 [System.Serializable]
 public class AppData
@@ -269,11 +270,34 @@ public class ApplicationManager : Singleton<ApplicationManager>
     public void SaveAs()
     {
         FileBrowser.SetFilters(false, new Filter("Json", ".json"));
-        FileBrowser.ShowSaveDialog((path) => 
+        FileBrowser.ShowSaveDialog((path) =>
         {
             DoSave(path);
-        }, 
+        },
         () => { });
+    }
+
+    public void SaveObjAs()
+    {
+        FileBrowser.SetFilters(false, new Filter("Obj", ".obj"));
+        FileBrowser.ShowSaveDialog((path) =>
+        {
+            DoSaveObj(path);
+        },
+        () => { });
+    }
+
+    public void DoSaveObj(string path)
+    {
+        var targetObj = SelectionManager.Instance.pivot;
+        var fileName = Path.GetFileNameWithoutExtension(path);
+        Debug.Log(fileName);
+        Debug.Log(path);
+
+        var directoryName = Path.GetDirectoryName(path);
+        Debug.Log(directoryName);
+
+        ObjExporterMain.DoExport(false, targetObj, fileName, path);
     }
 
     public void DoSave(string path)
