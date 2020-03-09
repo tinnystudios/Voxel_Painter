@@ -50,6 +50,8 @@ public class CreateBlockAction : MonoBehaviour, IAction
         Vector3 dir = face.forward;
 
         float hitSize = face.parent.localScale.x;
+        size = hitSize;
+
         float gap = hitSize - size;
 
         Vector3 blockPosition = face.parent.position;
